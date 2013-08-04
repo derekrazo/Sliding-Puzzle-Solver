@@ -32,4 +32,10 @@ public class Tray {
 		
 	}
 	
+	public boolean equals(Tray match)
+	//compares tray to match tray, returns true if equal
+	{
+		return (this.mapArray.equals(match.mapArray)&&this.sizeList.equals(match.sizeList));
+	}
+	
 }
