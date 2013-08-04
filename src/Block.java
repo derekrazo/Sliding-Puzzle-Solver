@@ -5,6 +5,8 @@ public class Block {
 	public int topLeftY;
 	public int bottomRightX;
 	public int bottomRightY;
+	public int myLength;
+	public int myHeight;
 	
 	public Block(int x1,int y1, int x2, int y2)
 	{
@@ -12,6 +14,8 @@ public class Block {
 		topLeftY = y1;
 		bottomRightX = x2;
 		bottomRightY = y2;
+		myLength = (bottomRightX - topLeftX) + 1;
+		myHeight = (bottomRightY - topLeftY) + 1;
 	}
 	
 	public Block(Block previous)
@@ -20,6 +24,8 @@ public class Block {
 		topLeftY = previous.topLeftY;
 		bottomRightX = previous.bottomRightX;
 		bottomRightY = previous.bottomRightY;
+		myLength = previous.myLength;
+		myHeight = previous.myHeight;
 	}
 	
 	
