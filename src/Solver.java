@@ -21,7 +21,6 @@ public class Solver
 		}
 		//initialize Solver Object
 		Solver mySolver = new Solver(args);
-		boolean done = false;
 		PathFinder myPathFinder = new PathFinder(initialTray,finalTray);
 		try
 		{
