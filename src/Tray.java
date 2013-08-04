@@ -25,7 +25,9 @@ public class Tray {
 
 	public Tray(String[] config, String size)
 	{
-		
+		//boardState = new int[size.charAt(0)][size.charAt(2)];
+		//blockSizes = new int[config.length];
+		//previousTray = null;
 	}
 	
 	//direction is represented as clockwise positive integers from 1-4 inclusive
