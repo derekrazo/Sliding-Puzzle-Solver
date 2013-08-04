@@ -1,0 +1,101 @@
+Tasks (Iter 2):
+
+-Pathfinder
+	-constructor
+	-solution
+-Tray
+	-Tray Constructor(s)
+
+
+
+Sliding Blocks – Iteration 2
+
+Global Variables:
+	-BlockMap(Block Id->size)
+	-Vistited trays
+	-priority queue of highest weighted tray states possible
+
+Tray Parser 
+Input ->(grid) : 
+
+		-Finds Blocks
+		-ID’s blocks and parses their sizes (optional – weights them)
+		-Creates 2D array (Representing Tray)
+		-Fill Cells with correct ID’s
+		-Fill Empty Cells with 0
+		-Add blocks to blockMap
+
+		-Constructs a tray (Start Tray)
+
+	Output -> Tray Object
+	
+Tray:
+	Input -> (2d array rep of the board) :
+
+		-Constructor		
+
+		-Variables:
+			-Array (Board State)
+			-(BlockList)
+			-previousTray
+
+		-Methods:
+			-Move (Block Id, direction)
+			-getMoves(returns possible next moves)
+			-Static closeness (tray)
+			-getMoveableBlocks (List of blocks relvently near empty space)
+			-equals
+ 		
+
+Solver:
+	-Methods:
+		-findPathways
+
+
+isOk:
+
+
+
+
+
+
+Tasks (Iter 1):
+
+1. Parser input and goal file into a data structure.
+
+2. A subroutine that tries to connect them in parallel.
+
+3. Equals method for board states
+
+4. Tray class (Nodes which contain board states)
+  -//contain every possible move
+
+5. Graph of trays 
+
+6. Output functions
+
+7. Double Graph traversal algorithm (built in reversible algorithm)
+
+8. isOK
+
+9. Data structure which contains tray states already visited
+
+10. Function that determines possible moves (tray) returns data structure with next moves. Refers to previous moves
+
+11. Compares the progress of both graph traversals
+
+12. Block class
+	-isMoveable attribute
+	-moveDirections
+	-goal state
+
+13. How to represent configuration such that it optimizes operations.
+
+14. Scheduler
+
+
+15. Configuration hash function
+
+16. Tests for everything
+
+
