@@ -1,6 +1,14 @@
 Tasks (Iter 2):
 
-Sliding Blocks – Iteration 1
+-Pathfinder
+	-constructor
+	-solution
+-Tray
+	-Tray Constructor(s)
+
+
+
+Sliding Blocks – Iteration 2
 
 Global Variables:
 	-BlockMap(Block Id->size)
@@ -11,8 +19,8 @@ Tray Parser
 Input ->(grid) : 
 
 		-Finds Blocks
--ID’s blocks and parses their sizes (optional – weights them)
--Creates 2D array (Representing Tray)
+		-ID’s blocks and parses their sizes (optional – weights them)
+		-Creates 2D array (Representing Tray)
 		-Fill Cells with correct ID’s
 		-Fill Empty Cells with 0
 		-Add blocks to blockMap
@@ -29,11 +37,12 @@ Tray:
 		-Variables:
 			-Array (Board State)
 			-(BlockList)
+			-previousTray
 
 		-Methods:
 			-Move (Block Id, direction)
 			-getMoves(returns possible next moves)
-			-closeness (tray)
+			-Static closeness (tray)
 			-getMoveableBlocks (List of blocks relvently near empty space)
 			-equals
  		
