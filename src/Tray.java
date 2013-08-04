@@ -85,6 +85,78 @@ public class Tray {
 		
 		return null;
 	}
+	
+	
+	
+	//given input ArrayList, adds all viable moves to the ArrayList as trays
+	public void getMoves(ArrayList<Tray> input)
+	{
+	for (int i = 0;i<myBlockList.length;i++){
+		for (int j=1;j<=4;j++)
+		{
+			switch (j)
+			{
+			case 1: //up
+				if (myBlockList[i].topLeftY-1<0)
+				{
+					break;
+				}
+				for(int k =myBlockList[i].topLeftX;k<=myBlockList[i].bottomRightX;k++)
+				{
+					if (myBoardState[k][myBlockList[i].topLeftY-1]!=-1)
+					{
+						break;
+					}
+				}
+				input.add(this.move(i, j));
+				break;
+			case 2: //right
+				if (myBlockList[i].bottomRightX+1>=myBoardState.length)
+				{
+					break;
+				}
+				for(int k =myBlockList[i].topLeftY;k<=myBlockList[i].bottomRightY;k++)
+				{
+					if (myBoardState[k][myBlockList[i].bottomRightX+1]!=-1)
+					{
+						break;
+					}
+				}
+				input.add(this.move(i, j));
+				break;
+			case 3: //down
+				if (myBlockList[i].bottomRightY+1<myBoardState[0].length)
+				{
+					break;
+				}
+				for(int k =myBlockList[i].topLeftX;k<=myBlockList[i].bottomRightX;k++)
+				{
+					if (myBoardState[k][myBlockList[i].bottomRightY+1]!=-1)
+					{
+						break;
+					}
+				}
+				input.add(this.move(i, j));
+				break;
+			case 4: //right
+				if (myBlockList[i].topLeftX-1<0)
+				{
+					break;
+				}
+				for(int k =myBlockList[i].topLeftY;k<=myBlockList[i].bottomRightY;k++)
+				{
+					if (myBoardState[k][myBlockList[i].topLeftX-1]!=-1)
+					{
+						break;
+					}
+				}
+				input.add(this.move(i, j));
+				break;
+			}
+			
+		}
+	}
+	}
 
 	
 }
