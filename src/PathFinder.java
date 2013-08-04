@@ -3,7 +3,7 @@ import java.util.LinkedList;
 
 
 public class PathFinder {
-  
+	
 	String myTrayCode;
 	LinkedList<Tray> startTrays;
 	LinkedList<Tray> endTrays;
@@ -27,7 +27,7 @@ public class PathFinder {
 		{
 			LinkedList<Tray> startFringe = new LinkedList<Tray>();
 			LinkedList<Tray> endFringe = new LinkedList<Tray>();
-		
+			
 			while(startTrays.size()!=0)
 			{
 				if(startTrays.peek().equals(endTrays.peek()))
@@ -36,7 +36,7 @@ public class PathFinder {
 				}
 				
 				//getMoves Returns iterator
-				//startFringe.add(startTrays.pop().getMoves());
+				startTrays.pop().getMoves(startFringe);
 			}
 			
 	
@@ -48,13 +48,12 @@ public class PathFinder {
 				}
 				
 				//getMoves Returns iterator
-				//endFringe.add(endTrays.pop().getMoves());
+				endTrays.pop().getMoves(endFringe);
 			}
 			
 			startTrays = startFringe;
 			endTrays = endFringe;
 		}
-		return null;
 	}
 	
 	public String [] findPath(Tray toStart, Tray toFinish)
@@ -63,9 +62,14 @@ public class PathFinder {
 		findPathBack(toStart);
 		findPathForward(toFinish);
 		
-		String [] rtnPath = new String Array();
+		String [] rtnPath = new String[path.size()];
 		
 		//Somehow Convert the path into a String [] of the correct syntax.
+		//Tray Needs a get move method
+		for(int i = 0; i < path.size()-1; i++)
+		{
+			rtnPath[i] = path.get(i).moveMade(path.get(i+1));
+		}
 		
 		return rtnPath;
 	}
