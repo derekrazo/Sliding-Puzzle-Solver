@@ -156,6 +156,38 @@ public class Tray {
 			
 		}
 	}
+	
+	public String moveMade(Tray next)
+	{
+		String prevPos = null;
+		String nextPos = null;
+		
+		boolean prevPosFound = false;
+		boolean nextPosFound = false;
+		
+		for(int col = 0; col < myBoardState[0].length; col++)
+		{
+			for(int row = 0; row < myBoardState.length; row++)
+			{
+				if(this.myBoardState[row][col] != next.myBoardState[row][col])
+				{
+					if(this.myBoardState[row][col]!=0&&!prevPosFound)
+					{
+						prevPos = col + " " + row;
+						prevPosFound = true;
+					}
+					if(next.myBoardState[row][col]!=0&&!nextPosFound)
+					{
+						nextPos = col + " " + row;
+						nextPosFound = true;
+					}
+				}
+			}
+		}
+		
+		return prevPos + " " + nextPos;
+	}
+	
 	}
 
 	
