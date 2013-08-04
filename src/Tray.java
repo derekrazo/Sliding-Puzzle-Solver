@@ -67,9 +67,11 @@ public class Tray {
 	}
 	
 	//only used for testing right now
-	public Tray(int [][] inBoardState)
+	public Tray(int [][] inBoardState, Block[] inBlockList)
 	{
 		myBoardState = inBoardState;
+		myBlockList = inBlockList;
+		myPreviousTray = null;
 	}
 
 	//assumes move is possible / legal
