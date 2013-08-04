@@ -231,5 +231,17 @@ public class Tray {
 
 		return prevPos + " " + nextPos;
 	}
+	
+	public boolean equals(Tray other)
+	{
+		for(Block block : this.myBlockList)
+		{
+			if(!block.equals(other.myBlockList[other.myBoardState[block.topLeftX][block.topLeftY]]))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
 
 }
