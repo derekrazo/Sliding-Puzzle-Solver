@@ -28,10 +28,18 @@ public class Tray {
 		
 	}
 	
+	//direction is represented as clockwise positive integers from 1-4 inclusive
 	public Tray(Tray previousTray, int moveBlockId, int direction)
 	{
+		myPreviousTray = previousTray;
+		blockSizes = previousTray.blockSizes;
+		this.boardState = previousTray.move(moveBlockId,direction);
+	}
+
+	private int[][] move(int moveBlockId, int direction) {
 		
 		
+		return null;
 	}
 	
 	public boolean equals(Tray match)
