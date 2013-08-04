@@ -20,7 +20,7 @@
 public class Tray {
 	
 	private int[][] myBoardState;
-	private Tray myPreviousTray;
+	public Tray myPreviousTray;
 	private Block[] myBlockList;
 
 	public Tray(String[] config, String size)
