@@ -1,4 +1,56 @@
-Tasks:
+Tasks (Iter 2):
+
+Sliding Blocks – Iteration 1
+
+Global Variables:
+	-BlockMap(Block Id->size)
+	-Vistited trays
+	-priority queue of highest weighted tray states possible
+
+Tray Parser 
+Input ->(grid) : 
+
+		-Finds Blocks
+-ID’s blocks and parses their sizes (optional – weights them)
+-Creates 2D array (Representing Tray)
+		-Fill Cells with correct ID’s
+		-Fill Empty Cells with 0
+		-Add blocks to blockMap
+
+		-Constructs a tray (Start Tray)
+
+	Output -> Tray Object
+	
+Tray:
+	Input -> (2d array rep of the board) :
+
+		-Constructor		
+
+		-Variables:
+			-Array (Board State)
+			-(BlockList)
+
+		-Methods:
+			-Move (Block Id, direction)
+			-getMoves(returns possible next moves)
+			-closeness (tray)
+			-getMoveableBlocks (List of blocks relvently near empty space)
+			-equals
+ 		
+
+Solver:
+	-Methods:
+		-findPathways
+
+
+isOk:
+
+
+
+
+
+
+Tasks (Iter 1):
 
 1. Parser input and goal file into a data structure.
 
@@ -36,3 +88,5 @@ Tasks:
 15. Configuration hash function
 
 16. Tests for everything
+
+
