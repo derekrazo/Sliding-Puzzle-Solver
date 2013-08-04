@@ -19,17 +19,20 @@
 
 public class Tray {
 
-	private int[] sizeList;
-	private int[][] mapArray;
-	
+	private int[][] boardState;
+	private Tray previousTray;
+	private int[] blockSizes;
+
 	public Tray(String[] config, String size)
 	{
 		
 	}
 	
-	public Tray(int[][] input_tray)
+	public Tray(Tray previousTray, int moveBlockId, int direction)
 	{
 		
+		
+	}
 	}
 	
 	public boolean equals(Tray match)
