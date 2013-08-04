@@ -23,7 +23,12 @@ public class Solver
 		Solver mySolver = new Solver(args);
 		boolean done = false;
 		PathFinder myPathFinder = new PathFinder(initialTray,finalTray);
+		try
+		{
 		String [] output = myPathFinder.solution();
+		}catch(NoAnswerException e){
+			System.exit(1);
+		}
 		for(int i=0;i<output.length;i++)
 		{
 			System.out.println(output[i]);
