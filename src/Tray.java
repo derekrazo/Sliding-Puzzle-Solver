@@ -19,6 +19,9 @@
 
 public class Tray {
 
+	private int[] sizeList;
+	private int[][] mapArray;
+	
 	public Tray(String[] config, String size)
 	{
 		
