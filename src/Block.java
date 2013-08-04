@@ -28,5 +28,20 @@ public class Block {
 		myHeight = previous.myHeight;
 	}
 	
+	public boolean equals(Block b)
+	{
+		if ((topLeftX == b.topLeftX) && 
+			(topLeftY == b.topLeftY) &&
+			(bottomRightX == b.bottomRightX) &&
+			(bottomRightY == b.bottomRightY) &&
+			(myLength == b.myLength) &&
+			(myHeight == b.myHeight))
+		{
+			return true;
+		}
+		
+		return false;
+	}
+	
 	
 }
