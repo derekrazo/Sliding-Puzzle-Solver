@@ -30,5 +30,21 @@ public class TrayTest {
 		//t.print();
 		
 	}
+	
+	@Test
+	public void cloneTest(){
+		String [] config = new String[1];
+		config[0]="0 0 0 0";
+		Tray start = new Tray(config,"1 2");
+		config [0]= "1 0 1 0";
+		Tray finish = new Tray(config,"1 2");
+		LinkedList test = new LinkedList();
+		start.getMoves(test);
+		Object moved = test.getFirst();
+		assertEquals(start,new Tray(config,"1 2"));
+		assertEquals(finish,new Tray(config,"1 2"));
+		assertEquals(moved,finish);
+		
+	}
 
 }
