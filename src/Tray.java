@@ -29,7 +29,7 @@ public class Tray {
 		//blockSizes = new int[config.length];
 		//previousTray = null;
 		myBlockList = null;
-		previousTray = null;
+		//previousTray = null;
 	}
 	
 	//direction is represented as clockwise positive integers from 1-4 inclusive
