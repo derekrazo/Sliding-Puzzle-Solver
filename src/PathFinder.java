@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 
@@ -7,6 +8,8 @@ public class PathFinder {
 	String myTrayCode;
 	LinkedList<Tray> startTrays;
 	LinkedList<Tray> endTrays;
+	
+	HashSet<Tray> prevTrays;
 	
 	ArrayList<Tray> path;
 	
@@ -27,9 +30,11 @@ public class PathFinder {
 		{
 			LinkedList<Tray> startFringe = new LinkedList<Tray>();
 			LinkedList<Tray> endFringe = new LinkedList<Tray>();
-			
+		
 			while(startTrays.size()!=0)
 			{
+				prevTrays.add(startTrays.peek());
+				
 				if(startTrays.peek().equals(endTrays.peek()))
 				{
 					return findPath(startTrays.pop(),endTrays.pop());
@@ -42,6 +47,8 @@ public class PathFinder {
 	
 			while(endTrays.size()!=0)
 			{
+				prevTrays.add(endTrays.peek());
+				
 				if(endTrays.peek().equals(startTrays.peek()))
 				{
 					return findPath(startTrays.pop(),endTrays.pop());
@@ -76,7 +83,7 @@ public class PathFinder {
 	
 	public void findPathBack(Tray t)
 	{
-		Tray prevT = t.prevTray;
+		Tray prevT = t.myPreviousTray;
 		
 		if(prevT != null)
 		{
@@ -87,7 +94,7 @@ public class PathFinder {
 	
 	public void findPathForward(Tray t)
 	{
-		Tray prevT = t.prevTray;
+		Tray prevT = t.myPreviousTray;
 		
 		if(prevT != null)
 		{
