@@ -19,7 +19,7 @@
 
 public class Tray {
 
-	public Tray(String[] config)
+	public Tray(String[] config, String size)
 	{
 		
 	}
