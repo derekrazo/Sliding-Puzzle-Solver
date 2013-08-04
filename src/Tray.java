@@ -1,4 +1,5 @@
 import java.util.LinkedList;
+import java.util.Arrays;
 
 /*
  * A tray is a representation of a board state. 
@@ -27,10 +28,20 @@ public class Tray {
 
 	public Tray(String[] config, String size)
 	{
-		boardState = new int[size.charAt(0)][size.charAt(2)];
-		//blockSizes = new int[config.length];
-		myBlockList = null;
-		previousTray = null;
+		myPreviousTray = null;
+		myBlockList = new Block[config.length];
+		String[] holder = size.split(" ");
+		myBoardState = new int[Integer.parseInt(holder[1])][Integer.parseInt(holder[0])];
+		for (int n=0; n < myBoardState.length; n++) {
+			Arrays.fill(myBoardState[n],-1);
+		}
+		for (int i=0;i<myBlockList.length;i++){
+			holder =config[i].split(" ");
+			myBlockList[i]=new Block (Integer.parseInt(holder[0]),Integer.parseInt(holder[1]),Integer.parseInt(holder[2]),Integer.parseInt(holder[3]));
+			for (int j = myBlockList[i].topLeftX;j<myBlockList[i].bottomRightX;j++){
+				Arrays.fill(myBoardState[j],myBlockList[i].topLeftY,myBlockList[i].bottomRightY, i);
+			}
+		}
 	}
 	
 	//direction is represented as clockwise positive integers from 1-4 inclusive
@@ -56,11 +67,9 @@ public class Tray {
 	}
 	
 	//only used for testing right now
-	public Tray(int [][] inBoardState, Block[] inBlockList)
+	public Tray(int [][] inBoardState)
 	{
 		myBoardState = inBoardState;
-		myBlockList = inBlockList;
-		myPreviousTray = null;
 	}
 
 	//assumes move is possible / legal
@@ -230,18 +239,6 @@ public class Tray {
 		}
 
 		return prevPos + " " + nextPos;
-	}
-	
-	public boolean equals(Tray other)
-	{
-		for(Block block : this.myBlockList)
-		{
-			if(!block.equals(other.myBlockList[other.myBoardState[block.topLeftX][block.topLeftY]]))
-			{
-				return false;
-			}
-		}
-		return true;
 	}
 
 }
