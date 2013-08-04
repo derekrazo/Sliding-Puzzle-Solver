@@ -19,9 +19,9 @@
 
 public class Tray {
 
-	private int[][] boardState;
-	private Tray previousTray;
-	private int[] blockSizes;
+	private int[][] myBoardState;
+	private Tray myPreviousTray;
+	private Block[] myBlockList;
 
 	public Tray(String[] config, String size)
 	{
@@ -32,8 +32,8 @@ public class Tray {
 	public Tray(Tray previousTray, int moveBlockId, int direction)
 	{
 		myPreviousTray = previousTray;
-		blockSizes = previousTray.blockSizes;
-		this.boardState = previousTray.move(moveBlockId,direction);
+		myBlockList = previousTray.myBlockList;
+		myBoardState = previousTray.move(moveBlockId,direction).myBoardState;
 	}
 
 	private int[][] move(int moveBlockId, int direction) {
