@@ -33,7 +33,6 @@ public class Tray {
 		
 		
 	}
-	}
 	
 	public boolean equals(Tray match)
 	//compares tray to match tray, returns true if equal
