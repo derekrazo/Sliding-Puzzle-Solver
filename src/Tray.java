@@ -64,27 +64,67 @@ public class Tray {
 		
 		Tray clone = new Tray(this);
 		
+		//change the block representation in new tray
 		switch(direction){
-			case 1: clone.myBlockList[moveBlockId].topLeftY = clone.myBlockList[moveBlockId].topLeftY+1;
+			case 1: 
+					for (int i = 0;i < myBlockList[moveBlockId].myLength;i++)
+					{
+						clone.myBoardState[clone.myBlockList[moveBlockId].topLeftX+i]
+								[clone.myBlockList[moveBlockId].topLeftY+1] = moveBlockId;
+						
+						clone.myBoardState[clone.myBlockList[moveBlockId].topLeftX+i]
+								[clone.myBlockList[moveBlockId].bottomRightY] = -1;
+					}
+					
+					clone.myBlockList[moveBlockId].topLeftY = clone.myBlockList[moveBlockId].topLeftY+1;
 					clone.myBlockList[moveBlockId].bottomRightY = clone.myBlockList[moveBlockId].bottomRightY+1;
+					
 					break;
 					
-			case 2: clone.myBlockList[moveBlockId].topLeftX = clone.myBlockList[moveBlockId].topLeftX+1;
+			case 2: 
+					for (int i = 0;i < myBlockList[moveBlockId].myHeight;i++)
+					{
+						clone.myBoardState[clone.myBlockList[moveBlockId].bottomRightX+1]
+								[clone.myBlockList[moveBlockId].topLeftY+i] = moveBlockId;
+						
+						clone.myBoardState[clone.myBlockList[moveBlockId].topLeftX]
+								[clone.myBlockList[moveBlockId].topLeftY+i] = -1;
+					}
+				
+					clone.myBlockList[moveBlockId].topLeftX = clone.myBlockList[moveBlockId].topLeftX+1;
 					clone.myBlockList[moveBlockId].bottomRightX = clone.myBlockList[moveBlockId].bottomRightX+1;
 					break;
 					
-			case 3: clone.myBlockList[moveBlockId].topLeftY = clone.myBlockList[moveBlockId].topLeftY-1;
+			case 3: 
+					for (int i = 0;i < myBlockList[moveBlockId].myLength;i++)
+					{
+						clone.myBoardState[clone.myBlockList[moveBlockId].topLeftX+i]
+								[clone.myBlockList[moveBlockId].bottomRightY-1] = moveBlockId;
+						
+						clone.myBoardState[clone.myBlockList[moveBlockId].topLeftX+i]
+								[clone.myBlockList[moveBlockId].topLeftY] = -1;
+					}
+				
+					clone.myBlockList[moveBlockId].topLeftY = clone.myBlockList[moveBlockId].topLeftY-1;
 					clone.myBlockList[moveBlockId].bottomRightY = clone.myBlockList[moveBlockId].bottomRightY-1;
 					break;
 					
-			case 4: clone.myBlockList[moveBlockId].topLeftX = clone.myBlockList[moveBlockId].topLeftX-1;
+			case 4: 
+					for (int i = 0;i < myBlockList[moveBlockId].myHeight;i++)
+					{
+						clone.myBoardState[clone.myBlockList[moveBlockId].topLeftX-1]
+								[clone.myBlockList[moveBlockId].topLeftY+i] = moveBlockId;
+						
+						clone.myBoardState[clone.myBlockList[moveBlockId].bottomRightX]
+								[clone.myBlockList[moveBlockId].topLeftY+i] = -1;
+					}
+				
+					clone.myBlockList[moveBlockId].topLeftX = clone.myBlockList[moveBlockId].topLeftX-1;
 					clone.myBlockList[moveBlockId].bottomRightX = clone.myBlockList[moveBlockId].bottomRightX-1;
 					break;
 		}
 		
-		
-		
-		return null;
+		return clone;
 	}
 	
 	
