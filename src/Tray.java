@@ -18,18 +18,25 @@
 
 
 public class Tray {
+<<<<<<< HEAD
 	
+=======
+
+>>>>>>> 010ffef05234cff12dded7cb6e38e0edc9ae026a
 	private int[][] myBoardState;
 	private Tray myPreviousTray;
 	private Block[] myBlockList;
 
 	public Tray(String[] config, String size)
 	{
-		
+		//boardState = new int[size.charAt(0)][size.charAt(2)];
+		//blockSizes = new int[config.length];
+		//previousTray = null;
 	}
 	
 	//direction is represented as clockwise positive integers from 1-4 inclusive
 	public Tray(Tray previousTray, int moveBlockId, int direction)
+<<<<<<< HEAD
 	{
 		myPreviousTray = previousTray;
 		myBlockList = previousTray.myBlockList;
@@ -48,6 +55,18 @@ public class Tray {
 		{
 			myBoardState[i] = previousTray.myBoardState[i].clone();
 		}
+=======
+	{
+		myPreviousTray = previousTray;
+		myBlockList = previousTray.myBlockList;
+		myBoardState = previousTray.move(moveBlockId,direction).myBoardState;
+	}
+
+	private int[][] move(int moveBlockId, int direction) {
+		
+		
+		return null;
+>>>>>>> 010ffef05234cff12dded7cb6e38e0edc9ae026a
 	}
 	
 	//only used for testing right now
