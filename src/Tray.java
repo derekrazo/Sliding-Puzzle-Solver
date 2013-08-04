@@ -1,3 +1,5 @@
+import java.util.LinkedList;
+
 /*
  * A tray is a representation of a board state. 
  * Trays will be stored inside a graph.
