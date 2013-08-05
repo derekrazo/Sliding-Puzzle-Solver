@@ -237,12 +237,12 @@ public class Tray {
 			{
 				if(this.myBoardState[row][col] != next.myBoardState[row][col])
 				{
-					if(this.myBoardState[row][col]!=0&&!prevPosFound)
+					if(this.myBoardState[row][col]!=-1&&!prevPosFound)
 					{
 						prevPos = col + " " + row;
 						prevPosFound = true;
 					}
-					if(next.myBoardState[row][col]!=0&&!nextPosFound)
+					if(next.myBoardState[row][col]!=-1&&!nextPosFound)
 					{
 						nextPos = col + " " + row;
 						nextPosFound = true;
