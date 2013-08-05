@@ -57,14 +57,15 @@ public class Tray {
 		myPreviousTray = previousTray;
 
 		myBlockList = new Block[previousTray.myBlockList.length];
+		
 		for (int b = 0;b < previousTray.myBlockList.length;b++)
 		{
-			myBlockList[b].topLeftX = previousTray.myBlockList[b].topLeftX;
-			myBlockList[b].topLeftY = previousTray.myBlockList[b].topLeftY;
-			myBlockList[b].bottomRightX = previousTray.myBlockList[b].bottomRightX;
-			myBlockList[b].bottomRightY = previousTray.myBlockList[b].bottomRightY;
-			myBlockList[b].myLength = previousTray.myBlockList[b].myLength;
-			myBlockList[b].myHeight = previousTray.myBlockList[b].myHeight;;
+			myBlockList[b] = new Block( previousTray.myBlockList[b].topLeftX,
+										previousTray.myBlockList[b].topLeftY,
+										previousTray.myBlockList[b].bottomRightX,
+										previousTray.myBlockList[b].bottomRightY
+									  );
+							
 		}
 		
 		myBoardState = new int[previousTray.myBoardState.length][];
