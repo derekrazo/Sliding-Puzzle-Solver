@@ -21,10 +21,11 @@ public class Solver
 		}
 		//initialize Solver Object
 		Solver mySolver = new Solver(args);
-		PathFinder myPathFinder = new PathFinder(initialTray,finalTray);
+		PathFinder myPathFinder = new PathFinder(mySolver.initialTray,mySolver.finalTray);
+		String [] output=null;
 		try
 		{
-		String [] output = myPathFinder.solution();
+		output = myPathFinder.solution();
 		}catch(NoAnswerException e){
 			System.exit(1);
 		}
@@ -72,8 +73,9 @@ public class Solver
 				break;
 			}
 		}
-		initialTray=new Tray(input1.toArray(),size);
-		finalTray=new Tray(input2.toArray(),size);
+		String [] goodexample =null;
+		initialTray=new Tray(input1.toArray(goodexample),size);
+		finalTray=new Tray(input2.toArray(goodexample),size);
 		
 	}
 	
