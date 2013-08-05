@@ -154,7 +154,7 @@ public class Tray {
 
 	
 	
-	//given input ArrayList, adds all viable moves to the ArrayList as trays
+//given input ArrayList, adds all viable moves to the ArrayList as trays
 	public void getMoves(LinkedList<Tray> fringe)
 	{
 	for (int i = 0;i<myBlockList.length;i++){
@@ -191,7 +191,7 @@ public class Tray {
 				fringe.add(this.move(i, j));
 				break;
 			case 3: //down
-				if (myBlockList[i].bottomRightY+1>myBoardState[0].length)
+				if (myBlockList[i].bottomRightY+1>=myBoardState[0].length)
 				{
 					break;
 				}
@@ -222,7 +222,7 @@ public class Tray {
 			}
 		}
 	}
-
+	
 	public String moveMade(Tray next)
 	{
 		String prevPos = null;
