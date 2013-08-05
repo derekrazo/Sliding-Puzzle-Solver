@@ -51,7 +51,7 @@ public class Tray {
 		myBlockList = previousTray.myBlockList;
 		myBoardState = previousTray.move(moveBlockId,direction).myBoardState;
 	}
-	
+
 	public Tray(Tray previousTray)
 	{
 		myPreviousTray = previousTray;
@@ -60,10 +60,10 @@ public class Tray {
 		
 		for (int b = 0;b < previousTray.myBlockList.length;b++)
 		{
-			myBlockList[b] = new Block( previousTray.myBlockList[b].topLeftX,
-										previousTray.myBlockList[b].topLeftY,
-										previousTray.myBlockList[b].bottomRightX,
-										previousTray.myBlockList[b].bottomRightY
+			myBlockList[b] = new Block( previousTray.myBlockList[b].leftCol,
+										previousTray.myBlockList[b].topRow,
+										previousTray.myBlockList[b].rightCol,
+										previousTray.myBlockList[b].bottomRow
 									  );
 							
 		}
@@ -75,14 +75,14 @@ public class Tray {
 			myBoardState[i] = previousTray.myBoardState[i].clone();
 		}
 	}
-	
+
 	//only used for testing right now
-	public Tray(int [][] inBoardState, Block[] inBlockList)
-	{
-		myBoardState = inBoardState;
-		myBlockList = inBlockList;
-		myPreviousTray = null;
-	}
+		public Tray(int [][] inBoardState, Block[] inBlockList)
+		{
+			myBoardState = inBoardState;
+			myBlockList = inBlockList;
+			myPreviousTray = null;
+		}
 
 	//assumes move is possible / legal
 	public Tray move(int moveBlockId, int direction) {
@@ -94,126 +94,127 @@ public class Tray {
 			case 1: 
 					for (int i = 0;i < myBlockList[moveBlockId].myLength;i++)
 					{
-						clone.myBoardState[clone.myBlockList[moveBlockId].topLeftX+i]
-								[clone.myBlockList[moveBlockId].topLeftY-1] = moveBlockId;
+						clone.myBoardState[clone.myBlockList[moveBlockId].leftCol+i]
+								[clone.myBlockList[moveBlockId].topRow-1] = moveBlockId;
 
-						clone.myBoardState[clone.myBlockList[moveBlockId].topLeftX+i]
-								[clone.myBlockList[moveBlockId].bottomRightY] = -1;
+						clone.myBoardState[clone.myBlockList[moveBlockId].leftCol+i]
+								[clone.myBlockList[moveBlockId].bottomRow] = -1;
 					}
 
-					clone.myBlockList[moveBlockId].topLeftY = clone.myBlockList[moveBlockId].topLeftY-1;
-					clone.myBlockList[moveBlockId].bottomRightY = clone.myBlockList[moveBlockId].bottomRightY-1;
+					clone.myBlockList[moveBlockId].topRow = clone.myBlockList[moveBlockId].topRow-1;
+					clone.myBlockList[moveBlockId].bottomRow = clone.myBlockList[moveBlockId].bottomRow-1;
 
 					break;
 
 			case 2: 
 					for (int i = 0;i < myBlockList[moveBlockId].myHeight;i++)
 					{
-						clone.myBoardState[clone.myBlockList[moveBlockId].bottomRightX+1]
-								[clone.myBlockList[moveBlockId].topLeftY+i] = moveBlockId;
+						clone.myBoardState[clone.myBlockList[moveBlockId].rightCol+1]
+								[clone.myBlockList[moveBlockId].topRow+i] = moveBlockId;
 
-						clone.myBoardState[clone.myBlockList[moveBlockId].topLeftX]
-								[clone.myBlockList[moveBlockId].topLeftY+i] = -1;
+						clone.myBoardState[clone.myBlockList[moveBlockId].leftCol]
+								[clone.myBlockList[moveBlockId].topRow+i] = -1;
 					}
 
-					clone.myBlockList[moveBlockId].topLeftX = clone.myBlockList[moveBlockId].topLeftX+1;
-					clone.myBlockList[moveBlockId].bottomRightX = clone.myBlockList[moveBlockId].bottomRightX+1;
+					clone.myBlockList[moveBlockId].leftCol = clone.myBlockList[moveBlockId].leftCol+1;
+					clone.myBlockList[moveBlockId].rightCol = clone.myBlockList[moveBlockId].rightCol+1;
 					break;
 
 			case 3: 
 					for (int i = 0;i < myBlockList[moveBlockId].myLength;i++)
 					{
-						clone.myBoardState[clone.myBlockList[moveBlockId].topLeftX+i]
-								[clone.myBlockList[moveBlockId].bottomRightY+1] = moveBlockId;
+						clone.myBoardState[clone.myBlockList[moveBlockId].leftCol+i]
+								[clone.myBlockList[moveBlockId].bottomRow+1] = moveBlockId;
 
-						clone.myBoardState[clone.myBlockList[moveBlockId].topLeftX+i]
-								[clone.myBlockList[moveBlockId].topLeftY] = -1;
+						clone.myBoardState[clone.myBlockList[moveBlockId].leftCol+i]
+								[clone.myBlockList[moveBlockId].topRow] = -1;
 					}
 
-					clone.myBlockList[moveBlockId].topLeftY = clone.myBlockList[moveBlockId].topLeftY+1;
-					clone.myBlockList[moveBlockId].bottomRightY = clone.myBlockList[moveBlockId].bottomRightY+1;
+					clone.myBlockList[moveBlockId].topRow = clone.myBlockList[moveBlockId].topRow+1;
+					clone.myBlockList[moveBlockId].bottomRow = clone.myBlockList[moveBlockId].bottomRow+1;
 					break;
 
 			case 4: 
 					for (int i = 0;i < myBlockList[moveBlockId].myHeight;i++)
 					{
-						clone.myBoardState[clone.myBlockList[moveBlockId].topLeftX-1]
-								[clone.myBlockList[moveBlockId].topLeftY+i] = moveBlockId;
+						clone.myBoardState[clone.myBlockList[moveBlockId].leftCol-1]
+								[clone.myBlockList[moveBlockId].topRow+i] = moveBlockId;
 
-						clone.myBoardState[clone.myBlockList[moveBlockId].bottomRightX]
-								[clone.myBlockList[moveBlockId].topLeftY+i] = -1;
+						clone.myBoardState[clone.myBlockList[moveBlockId].rightCol]
+								[clone.myBlockList[moveBlockId].topRow+i] = -1;
 					}
 
-					clone.myBlockList[moveBlockId].topLeftX = clone.myBlockList[moveBlockId].topLeftX-1;
-					clone.myBlockList[moveBlockId].bottomRightX = clone.myBlockList[moveBlockId].bottomRightX-1;
+					clone.myBlockList[moveBlockId].leftCol = clone.myBlockList[moveBlockId].leftCol-1;
+					clone.myBlockList[moveBlockId].rightCol = clone.myBlockList[moveBlockId].rightCol-1;
 					break;
 		}
 
 		return clone;
 	}
 
-	
-	
-//given input ArrayList, adds all viable moves to the ArrayList as trays
+
+	//given input ArrayList, adds all viable moves to the ArrayList as trays
 	public void getMoves(LinkedList<Tray> fringe)
 	{
 	for (int i = 0;i<myBlockList.length;i++){
 		for (int j=1;j<=4;j++)
 		{
+			Label1:
 			switch (j)
 			{
+			
 			case 1: //up
-				if (myBlockList[i].topLeftY-1<0)
+				if (myBlockList[i].topRow-1<0)
 				{
 					break;
 				}
-				for(int k =myBlockList[i].topLeftX;k<=myBlockList[i].bottomRightX;k++)
+				for(int k =myBlockList[i].leftCol;k<=myBlockList[i].rightCol;k++)
 				{
-					if (myBoardState[k][myBlockList[i].topLeftY-1]!=-1)
+					if (myBoardState[k][myBlockList[i].topRow-1]!=-1)
 					{
-						break;
+						break Label1;
 					}
 				}
 				fringe.add(this.move(i, j));
 				break;
 			case 2: //right
-				if (myBlockList[i].bottomRightX+1>=myBoardState.length)
+				if (myBlockList[i].rightCol+1>=myBoardState.length)
 				{
 					break;
 				}
-				for(int k =myBlockList[i].topLeftY;k<=myBlockList[i].bottomRightY;k++)
+				for(int k =myBlockList[i].topRow;k<=myBlockList[i].bottomRow;k++)
 				{
-					if (myBoardState[k][myBlockList[i].bottomRightX+1]!=-1)
+					if (myBoardState[myBlockList[i].rightCol+1][k]!=-1)
 					{
-						break;
+						break Label1;
 					}
 				}
 				fringe.add(this.move(i, j));
 				break;
 			case 3: //down
-				if (myBlockList[i].bottomRightY+1>=myBoardState[0].length)
+				if (myBlockList[i].bottomRow+1>=myBoardState[0].length)
 				{
 					break;
 				}
-				for(int k =myBlockList[i].topLeftX;k<=myBlockList[i].bottomRightX;k++)
+				for(int k =myBlockList[i].leftCol;k<=myBlockList[i].rightCol;k++)
 				{
-					if (myBoardState[k][myBlockList[i].bottomRightY+1]!=-1)
+					if (myBoardState[k][myBlockList[i].bottomRow+1]!=-1)
 					{
-						break;
+						break Label1;
 					}
 				}
 				fringe.add(this.move(i, j));
 				break;
 			case 4: //right
-				if (myBlockList[i].topLeftX-1<0)
+				if (myBlockList[i].leftCol-1<0)
 				{
 					break;
 				}
-				for(int k =myBlockList[i].topLeftY;k<=myBlockList[i].bottomRightY;k++)
+				for(int k =myBlockList[i].topRow;k<=myBlockList[i].bottomRow;k++)
 				{
-					if (myBoardState[k][myBlockList[i].topLeftX-1]!=-1)
+					if (myBoardState[myBlockList[i].leftCol-1][k]!=-1)
 					{
-						break;
+						break Label1;
 					}
 				}
 				fringe.add(this.move(i, j));
@@ -222,11 +223,12 @@ public class Tray {
 			}
 		}
 	}
-	
+
 	public String moveMade(Tray next)
 	{
 		String prevPos = null;
 		String nextPos = null;
+		
 
 		boolean prevPosFound = false;
 		boolean nextPosFound = false;
@@ -258,11 +260,11 @@ public class Tray {
 	{
 		for(Block block : this.myBlockList)
 		{
-			if(other.myBoardState[block.topLeftX][block.topLeftY]==-1)
+			if(other.myBoardState[block.leftCol][block.topRow]==-1)
 			{
 				return false;
 			}
-			if(!block.equals(other.myBlockList[other.myBoardState[block.topLeftX][block.topLeftY]]))
+			if(!block.equals(other.myBlockList[other.myBoardState[block.leftCol][block.topRow]]))
 			{
 				return false;
 			}
