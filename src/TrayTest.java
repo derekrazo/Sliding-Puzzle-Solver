@@ -290,6 +290,37 @@ public class TrayTest {
 		System.out.println("fringe : bottom rightY : " + myTray.myBlockList[0].bottomRow);
 			
 	}
+	
+	// still fixing this one
+	@Test
+	public void firstTrayConstructorTest() {
+		String[] config = new String[1];
+		
+		config[0] = "0 0 0 0";
+		Tray firstTest = new Tray(config, "1, 1");
+		System.out.println(firstTest);
+		assertEquals(firstTest, new Tray(config, "1, 1"));
+		assertThat(System.out.println(firstTest), System.out.println("[[0]]"));
+		
+		config[0] = "1 1 1 1";
+		Tray secondTest = new Tray(config, "4, 4");
+		assertEquals(secondTest, new Tray(config, "4, 4"));
+		assertThat(System.out.println(secondTest), System.out.println("[[1]]"));
+		// not sure if this is correct ^
+		
+		// large board state
+		config[0] = "0 0 1 1";
+		Tray thirdTest = new Tray(config, "10, 12");
+		assertEquals(thirdTest, new Tray(config, "10, 12"));
+		assertThat(System.out.println(thirdTest), System.out.println("[[0 1 2 3]]"));
+		// not sure if this is correct ^
+		
+		config[0] = "0 0 1 0";
+		Tray fourthTest = new Tray(config, "20, 20");
+		assertEquals(fourthTest, new Tray(config, "20, 20"));
+		assertThat(System.out.println(fourthTest), System.out.println(" "));
+		// finishing soon
+	}
 
-}
+
 }
