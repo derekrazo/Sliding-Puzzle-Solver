@@ -14,7 +14,7 @@ public class Solver
 	public static void main(String[] args)
 	{
 		//can take either 2 args or 3 args
-		if (args.length<2||args.length>3)
+		if (args.length==0||args.length>3)
 		{
 			System.err.println("***Invalid Number of Arguments");
 			System.exit(1);
@@ -42,6 +42,13 @@ public class Solver
 	{
 		InputSource initialString;
 		InputSource finalString;
+		if(args.length==1)
+		{
+			if(!args[0].equals("-ooptions")){
+				System.out.println("***Invalid Args");
+			}
+			
+		}
 		if(args.length==2)
 		{
 			initialString=new InputSource(args[0]);
