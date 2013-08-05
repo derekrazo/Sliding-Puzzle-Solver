@@ -36,9 +36,9 @@ public class Tray {
 			Arrays.fill(myBoardState[n],-1);
 		}
 		for (int i=0;i<myBlockList.length;i++){
-			holder =config[i].split(" ");
-			myBlockList[i]=new Block (Integer.parseInt(holder[0]),Integer.parseInt(holder[1]),Integer.parseInt(holder[2]),Integer.parseInt(holder[3]));
-			for (int j = myBlockList[i].topLeftX;j<myBlockList[i].bottomRightX;j++){
+			String[]block =config[i].split(" ");
+			myBlockList[i]=new Block (Integer.parseInt(block[0]),Integer.parseInt(block[1]),Integer.parseInt(block[2]),Integer.parseInt(block[3]));
+			for (int j = myBlockList[i].topLeftX;j<=myBlockList[i].bottomRightX;j++){
 				Arrays.fill(myBoardState[j],myBlockList[i].topLeftY,myBlockList[i].bottomRightY, i);
 			}
 		}
