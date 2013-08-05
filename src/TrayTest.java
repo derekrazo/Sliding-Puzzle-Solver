@@ -143,36 +143,4 @@ public class TrayTest {
 		assertTrue(moveTray.equals(trayStart));
 		
 	}
-	
-	@Test
-	public void firstTrayConstructorTest() {
-		String[] config = new String[1];
-		config[0] = "0 0 0 0";
-		Tray firstTest = new Tray(config, "1, 2");
-		System.out.println(firstTest);
-		assertEquals(firstTest, new Tray(config, "1, 2"));
-		// see if a new block has been made
-		// see if block has correct coordinates
-		
-		// code taken from Tray constructor just for testing creation of Blocks in myTestBlockList
-		// getting around myTestBlockList's private setting
-		String testSize = "1, 2";
-		Block[] myTestBlockList = new Block[config.length];
-		String[] holder = testSize.split(" ");
-		int[][] myTestBoardState = 
-				new int[Integer.parseInt(holder[1])][Integer.parseInt(holder[0])];
-		for (int i=0;i<myTestBlockList.length;i++){
-			holder =config[i].split(" ");
-			myTestBlockList[i]=new Block (Integer.parseInt(holder[0]),Integer.parseInt(holder[1]),
-					Integer.parseInt(holder[2]),Integer.parseInt(holder[3]));
-			for (int j = myTestBlockList[i].topLeftX;j<myTestBlockList[i].bottomRightX;j++){
-				Arrays.fill(myTestBoardState[j],myTestBlockList[i].topLeftY,
-						myTestBlockList[i].bottomRightY, i);
-			}
-		}
-		// test
-		assertNotNull(myTestBlockList);
-		assertTrue(myTestBlockList[0] = new Block(0, 0, 0, 0););
-	}
-}
 }
