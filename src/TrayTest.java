@@ -82,5 +82,65 @@ public class TrayTest {
 		
 	}
 	
+		@Test
+	public void testBig() {
+		
+		int [][] startBoard =
+		   {{ 0, 0,-1,-1},
+			{ 0, 0,-1,-1},
+			{-1,-1,-1,-1},
+			{-1,-1,-1,-1}};
 
+		Block [] startBlocks = {new Block(0,0,1,1)};
+
+		int [][] endBoard = 
+			{{-1, 0,0,-1},
+			 {-1, 0,0,-1},
+			 {-1,-1,-1,-1},
+			 {-1,-1,-1,-1}};
+
+		Block [] endBlocks = {new Block(0,1,1,2)};
+		
+		int [][] leftBoard = 
+			{{-1,-1,-1,-1},
+			 { 0,0,-1,-1},
+			 { 0,0,-1,-1},
+			 {-1,-1,-1,-1}};
+
+		Block [] leftBlocks = {new Block(1,0,2,1)};
+		
+
+		Tray trayStart = new Tray(startBoard, startBlocks);
+		Tray trayStartCopy = new Tray(startBoard, startBlocks);
+		
+		Tray trayLeft = new Tray(leftBoard, leftBlocks);
+		
+		Tray trayEnd = new Tray(endBoard, endBlocks);
+		
+		//Tests equals method
+		assertTrue(trayStart.equals(trayStartCopy));
+		assertFalse(trayStart.equals(trayEnd));
+
+		//test down
+		Tray moveTray = new Tray(trayStart.move(0, 3));
+		assertTrue(trayEnd.equals(moveTray));
+		assertTrue(moveTray.equals(trayEnd));
+		assertFalse(trayStart.equals(trayEnd));
+		assertFalse(moveTray.equals(trayStart));
+		
+
+		//test up
+		moveTray = moveTray.move(0, 1);
+		assertTrue(trayStart.equals(moveTray));
+		assertFalse(moveTray.equals(trayEnd));
+
+		//test left
+		moveTray = moveTray.move(0, 4);
+		assertTrue(moveTray.equals(trayLeft));
+		
+		//test right
+		moveTray = moveTray.move(0, 2);
+		assertTrue(moveTray.equals(trayStart));
+		
+	}
 }
