@@ -82,7 +82,7 @@ public class Solver
 				break;
 			}
 		}
-		String [] goodexample =null;
+		String [] goodexample =new String[0];
 		initialTray=new Tray(input1.toArray(goodexample),size);
 		finalTray=new Tray(input2.toArray(goodexample),size);
 		
