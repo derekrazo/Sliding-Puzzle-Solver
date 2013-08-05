@@ -1,39 +1,39 @@
 
 public class Block {
 
-	public int topLeftX;
-	public int topLeftY;
-	public int bottomRightX;
-	public int bottomRightY;
+	public int leftCol;
+	public int topRow;
+	public int rightCol;
+	public int bottomRow;
 	public int myLength;
 	public int myHeight;
 	
 	public Block(int x1,int y1, int x2, int y2)
 	{
-		topLeftX = x1;
-		topLeftY = y1;
-		bottomRightX = x2;
-		bottomRightY = y2;
-		myLength = (bottomRightX - topLeftX) + 1;
-		myHeight = (bottomRightY - topLeftY) + 1;
+		leftCol = x1;
+		topRow = y1;
+		rightCol = x2;
+		bottomRow = y2;
+		myLength = (rightCol - leftCol) + 1;
+		myHeight = (bottomRow - topRow) + 1;
 	}
 	
 	public Block(Block previous)
 	{
-		topLeftX = previous.topLeftX;
-		topLeftY = previous.topLeftY;
-		bottomRightX = previous.bottomRightX;
-		bottomRightY = previous.bottomRightY;
+		leftCol = previous.leftCol;
+		topRow = previous.topRow;
+		rightCol = previous.rightCol;
+		bottomRow = previous.bottomRow;
 		myLength = previous.myLength;
 		myHeight = previous.myHeight;
 	}
 	
 	public boolean equals(Block b)
 	{
-		if ((topLeftX == b.topLeftX) && 
-			(topLeftY == b.topLeftY) &&
-			(bottomRightX == b.bottomRightX) &&
-			(bottomRightY == b.bottomRightY) &&
+		if ((leftCol == b.leftCol) && 
+			(topRow == b.topRow) &&
+			(rightCol == b.rightCol) &&
+			(bottomRow == b.bottomRow) &&
 			(myLength == b.myLength) &&
 			(myHeight == b.myHeight))
 		{
@@ -45,3 +45,4 @@ public class Block {
 	
 	
 }
+
