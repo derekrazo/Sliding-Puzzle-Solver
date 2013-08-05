@@ -47,6 +47,8 @@ public class Solver
 			if(!args[0].equals("-ooptions")){
 				System.out.println("***Invalid Args");
 			}
+			debugParser(args[0].toLowerCase().trim());
+			System.exit(1);
 			
 		}
 		if(args.length==2)
