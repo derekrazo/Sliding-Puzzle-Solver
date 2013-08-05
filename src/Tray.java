@@ -191,7 +191,7 @@ public class Tray {
 				fringe.add(this.move(i, j));
 				break;
 			case 3: //down
-				if (myBlockList[i].bottomRightY+1<myBoardState[0].length)
+				if (myBlockList[i].bottomRightY+1>myBoardState[0].length)
 				{
 					break;
 				}
