@@ -117,41 +117,79 @@ public class PathFinder {
 		}
 	}
 
-	public String [] findPath(Tray toStart, Tray toFinish)
-	{
+	public String[] findPath(Tray toStart, Tray toFinish) {
+		
+		//For Debugging
+		/*
+		int [][] boardStart = toStart.myBoardState;
+		for(int[] arraySrt : boardStart)
+		{
+			for(int intergerSrt : arraySrt)
+			{
+				System.out.print(intergerSrt);
+			}
+			System.out.println();
+		}
+		System.out.println();
+		
+
+		int [][] boardEnd = toFinish.myBoardState;
+		for(int[] arrayEnd : boardEnd)
+		{
+			for(int intergerEnd : arrayEnd)
+			{
+				System.out.print(intergerEnd);
+			}
+			System.out.println();
+		}
+		System.out.println();
+		
+		System.out.println(toStart.equals(toFinish));
+		*/
+		
 		path.add(toStart);
 		findPathBack(toStart);
 		findPathForward(toFinish);
-		
-		String [] rtnPath = new String[path.size()];
-		
-		for(int i = 0; i < path.size()-1; i++)
-		{
-			rtnPath[i] = path.get(i).moveMade(path.get(i+1));
+
+		String[] rtnPath = new String[path.size()];
+
+		for (int i = 0; i < path.size()-1; i++) {
+			rtnPath[i] = path.get(i).moveMade(path.get(i + 1));
+			
+			//For Debugging
+			/*
+			int [][] board = path.get(i).myBoardState;
+			for(int[] array : board)
+			{
+				for(int interger : array)
+				{
+					System.out.print(interger);
+				}
+				System.out.println();
+			}
+			System.out.println();
+			*/
+			
 		}
-		
+
 		return rtnPath;
 	}
-	
-	public void findPathBack(Tray t)
-	{
+
+	public void findPathBack(Tray t) {
 		Tray prevT = t.myPreviousTray;
-		
-		if(prevT != null)
-		{
+
+		if (prevT != null) {
 			path.add(0, prevT);
 			findPathBack(prevT);
 		}
 	}
-	
-	public void findPathForward(Tray t)
-	{
+
+	public void findPathForward(Tray t) {
 		Tray prevT = t.myPreviousTray;
-		
-		if(prevT != null)
-		{
+
+		if (prevT != null) {
 			path.add(prevT);
-			findPathBack(prevT);
+			findPathForward(prevT);
 		}
 	}
 }
