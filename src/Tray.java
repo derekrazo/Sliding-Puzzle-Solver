@@ -26,20 +26,23 @@ public class Tray {
 	public Tray myPreviousTray;
 	public Block[] myBlockList;
 
-	public Tray(String[] config, String size)
-	{
+	public Tray(String[] config, String size) {
 		myPreviousTray = null;
 		myBlockList = new Block[config.length];
 		String[] holder = size.split(" ");
-		myBoardState = new int[Integer.parseInt(holder[1])][Integer.parseInt(holder[0])];
-		for (int n=0; n < myBoardState.length; n++) {
-			Arrays.fill(myBoardState[n],-1);
+		myBoardState = new int[Integer.parseInt(holder[1])][Integer
+				.parseInt(holder[0])];
+		for (int n = 0; n < myBoardState.length; n++) {
+			Arrays.fill(myBoardState[n], -1);
 		}
-		for (int i=0;i<myBlockList.length;i++){
-			String[]block =config[i].split(" ");
-			myBlockList[i]=new Block (Integer.parseInt(block[0]),Integer.parseInt(block[1]),Integer.parseInt(block[2]),Integer.parseInt(block[3]));
-			for (int j = myBlockList[i].topLeftX;j<=myBlockList[i].bottomRightX;j++){
-				Arrays.fill(myBoardState[j],myBlockList[i].topLeftY,myBlockList[i].bottomRightY+1, i);
+		for (int i = 0; i < myBlockList.length; i++) {
+			String[] block = config[i].split(" ");
+			myBlockList[i] = new Block(Integer.parseInt(block[0]),
+					Integer.parseInt(block[1]), Integer.parseInt(block[2]),
+					Integer.parseInt(block[3]));
+			for (int j = myBlockList[i].leftCol; j <= myBlockList[i].rightCol; j++) {
+				Arrays.fill(myBoardState[j], myBlockList[i].topRow,
+						myBlockList[i].bottomRow + 1, i);
 			}
 		}
 	}
