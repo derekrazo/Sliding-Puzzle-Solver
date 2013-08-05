@@ -22,9 +22,9 @@ import java.util.Arrays;
 
 public class Tray {
 	
-	private int[][] myBoardState;
+	public int[][] myBoardState;
 	public Tray myPreviousTray;
-	private Block[] myBlockList;
+	public Block[] myBlockList;
 
 	public Tray(String[] config, String size)
 	{
