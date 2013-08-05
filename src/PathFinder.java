@@ -28,7 +28,7 @@ public class PathFinder {
 		path = new ArrayList<Tray>();
 	}
 	
-	public String [] solution()
+	public String [] solution() throws NoAnswerException
 	{
 		while(true)
 		{
