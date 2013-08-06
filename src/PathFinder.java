@@ -4,7 +4,11 @@ import java.util.LinkedList;
 
 
 public class PathFinder {
-	// 
+	// works backwards and forwards to find a path between endtray and start tray
+	// has two linkedlists to store moves possible
+	// has two hashsets to keep track of what moves have already been examined
+	// has a path arrayList for constructing the solution
+	
 	String myTrayCode;
 	LinkedList<Tray> startTrays;
 	LinkedList<Tray> endTrays;
