@@ -4,7 +4,7 @@ import java.util.LinkedList;
 
 
 public class PathFinder {
-	
+	// 
 	String myTrayCode;
 	LinkedList<Tray> startTrays;
 	LinkedList<Tray> endTrays;
@@ -16,6 +16,9 @@ public class PathFinder {
 	
 	public PathFinder(Tray startTray, Tray endTray)
 	{
+		// takes in Tray representing initial state, tray representing goal
+		// adds startTray to Linklist startTrays, endTray to LinkList endTrays
+		// initializes the rest of the instance variables
 		startTrays = new LinkedList<Tray>();
 		startTrays.add(startTray);
 		
@@ -38,6 +41,8 @@ public class PathFinder {
 			System.out.println(endTrays.size());
 			
 			//Inefficient as FUCK!
+			//iterates through all of startTray and endTray, looking for a match
+			//if a match is found, return path
 			for(Tray startTray : prevStartTrays)
 			{
 				for(Tray endTray : prevEndTrays)
@@ -50,9 +55,10 @@ public class PathFinder {
 				}
 			}
 			
+			//initialize new fringes
 			LinkedList<Tray> startFringe = new LinkedList<Tray>();
 			LinkedList<Tray> endFringe = new LinkedList<Tray>();
-		
+			//add all possible moves to startfringe
 			while(startTrays.size()!=0)
 			{
 				prevStartTrays.add(startTrays.peek());
@@ -78,7 +84,7 @@ public class PathFinder {
 				//getMoves Returns iterator
 				startTrays.pop().getMoves(startFringe);
 			}
-	
+			//add all possible moves to end fringe (going backwards)
 			while(endTrays.size()!=0)
 			{
 				prevEndTrays.add(endTrays.peek());
@@ -101,13 +107,13 @@ public class PathFinder {
 				}
 				*/
 				
-				//getMoves Returns iterator
+				//getMoves Returns collection
 				endTrays.pop().getMoves(endFringe);
 			}
 
 			//Can make this more efficient
 			startFringe.removeAll(prevStartTrays);
-			
+			//removes all things stored in hashtables
 			startTrays = startFringe;
 			
 			//Can make this more efficient
@@ -150,7 +156,8 @@ public class PathFinder {
 		path.add(toStart);
 		findPathBack(toStart);
 		findPathForward(toFinish);
-
+		// creates string array with cell for each tray in the path
+		// store string returned by Tray.movemade of each move made
 		String[] rtnPath = new String[path.size()];
 
 		for (int i = 0; i < path.size()-1; i++) {
@@ -176,6 +183,7 @@ public class PathFinder {
 	}
 
 	public void findPathBack(Tray t) {
+		//recursively uses myPreviousTray to follows trays back to origin
 		Tray prevT = t.myPreviousTray;
 
 		if (prevT != null) {
@@ -185,6 +193,7 @@ public class PathFinder {
 	}
 
 	public void findPathForward(Tray t) {
+		//recursively uses myPreviousTray to follows trays back to origin
 		Tray prevT = t.myPreviousTray;
 
 		if (prevT != null) {
