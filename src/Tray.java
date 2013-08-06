@@ -21,12 +21,18 @@ import java.util.Arrays;
 
 
 public class Tray {
+	//myBoardState is a doubleArray showing position of blocks
+	//myBlockList contains all block objects on the tray
+	//myPreviousTray points back to the Tray preceding this one
 	
 	public int[][] myBoardState;
 	public Tray myPreviousTray;
 	public Block[] myBlockList;
 
 	public Tray(String[] config, String size) {
+		//takes in a String Array 
+		// of format [x y x y,x y x y, etc] where each cell is the points for one block
+		// as well as a string size of format "x y" 
 		myPreviousTray = null;
 		myBlockList = new Block[config.length];
 		String[] holder = size.split(" ");
@@ -50,6 +56,7 @@ public class Tray {
 	//direction is represented as clockwise positive integers from 1-4 inclusive
 	public Tray(Tray previousTray, int moveBlockId, int direction)
 	{
+		//makes new tray off of playing one move on previous Tray
 		myPreviousTray = previousTray;
 		myBlockList = previousTray.myBlockList;
 		myBoardState = previousTray.move(moveBlockId,direction).myBoardState;
@@ -57,6 +64,7 @@ public class Tray {
 
 	public Tray(Tray previousTray)
 	{
+		//clones previous tray
 		myPreviousTray = previousTray;
 
 		myBlockList = new Block[previousTray.myBlockList.length];
