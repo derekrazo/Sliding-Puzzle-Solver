@@ -9,6 +9,7 @@ public class Block {
 	public int bottomRow;
 	public int myLength;
 	public int myHeight;
+	public int myWeight;
 	
 	public Block(int x1,int y1, int x2, int y2)
 	{
@@ -19,6 +20,8 @@ public class Block {
 		bottomRow = y2;
 		myLength = (rightCol - leftCol) + 1;
 		myHeight = (bottomRow - topRow) + 1;
+		// myWeight = (size x proximity)
+		//	    = myWeight;
 	}
 	
 	public Block(Block previous)
@@ -30,6 +33,7 @@ public class Block {
 		bottomRow = previous.bottomRow;
 		myLength = previous.myLength;
 		myHeight = previous.myHeight;
+		myWeight = previous.myWeight;
 	}
 	
 	public boolean equals(Block b)
@@ -40,7 +44,8 @@ public class Block {
 			(rightCol == b.rightCol) &&
 			(bottomRow == b.bottomRow) &&
 			(myLength == b.myLength) &&
-			(myHeight == b.myHeight))
+			(myHeight == b.myHeight) &&
+			(myWeight == b.myWeight))
 		{
 			return true;
 		}
