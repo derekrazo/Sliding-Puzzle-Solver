@@ -235,12 +235,11 @@ public class Tray {
 		}
 	}
 
-	//Update This: Make refernce top position/size
 	public String moveMade(Tray next)
 	{
 		String prevPos = null;
 		String nextPos = null;
-		
+
 
 		boolean prevPosFound = false;
 		boolean nextPosFound = false;
@@ -249,18 +248,19 @@ public class Tray {
 		{
 			for(int row = 0; row < myBoardState.length; row++)
 			{
-				if(this.myBoardState[row][col] != next.myBoardState[row][col])
+				int thisBlockID = this.myBoardState[row][col];
+				int nextBlockID = next.myBoardState[row][col];
+				
+				if(nextBlockID==-1&&!prevPosFound&&thisBlockID!=-1)
 				{
-					if(this.myBoardState[row][col]!=-1&&!prevPosFound)
-					{
-						prevPos = col + " " + row;
-						prevPosFound = true;
-					}
-					if(next.myBoardState[row][col]!=-1&&!nextPosFound)
-					{
-						nextPos = col + " " + row;
-						nextPosFound = true;
-					}
+					prevPos = this.myBlockList[thisBlockID].leftCol + " " + this.myBlockList[thisBlockID].topRow;
+					prevPosFound = true;
+				}
+
+				if(thisBlockID==-1&&!nextPosFound&&nextBlockID!=-1)
+				{
+					nextPos = next.myBlockList[nextBlockID].leftCol + " " + next.myBlockList[nextBlockID].topRow;
+					nextPosFound = true;
 				}
 			}
 		}
