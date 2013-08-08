@@ -36,8 +36,8 @@ public class Tray {
 		myPreviousTray = null;
 		myBlockList = new Block[config.length];
 		String[] holder = size.split(" ");
-		myBoardState = new int[Integer.parseInt(holder[1])][Integer
-				.parseInt(holder[0])];
+		myBoardState = new int[Integer.parseInt(holder[0])][Integer
+				.parseInt(holder[1])];
 		for (int n = 0; n < myBoardState.length; n++) {
 			Arrays.fill(myBoardState[n], -1);
 		}
