@@ -289,14 +289,13 @@ public class Tray {
 	// fixing
 	
 	public void addWeight(Tray t) {
-		Block[] alreadySeen = new Block[];
 		int myProximity;
 		int mySize;
-		alreadySeen = findDuplicates(t);
-		for (Block b: t) {
+		Block[] alreadySeen = findDuplicates(t);
+		for (Block b: t.myBlockList) {
 			for (int i = 0; i < alreadySeen.length; i++) {
 				if (b != alreadySeen[i]) {
-					b.myProximity = b.findProximity();
+					b.myProximity = b.findProximity(t);
 					b.myWeight = b.myProximity * b.mySize;
 				} else {
 					b.myWeight = b.myWeight - 1;
@@ -306,17 +305,19 @@ public class Tray {
 
 		// overload this
 	}
-
+	
 	public Block[] findDuplicates(Tray t) {
-		for (Block b: t) {
-			b = this.Block;
-			for (int i = 0; t.myBlockList.length; i++) {
-				if (b.equals(t.myBlockList[i])) {
+		Block[] alreadySeen = new Block[myBlockList.length];
+		for (int i = 0; i < t.myBlockList.length; i++) {
+			Block a = this.myBlockList[i];
+			for (int j = i - 1; j < myBlockList.length; j++) {
+				Block b = this.myBlockList[j];
+				if (b.equals(a)) {
 					b = alreadySeen[i];
 				}
 			}
 		}
-		return alreadySeen; 
+		return alreadySeen;
 	}
 
 }
