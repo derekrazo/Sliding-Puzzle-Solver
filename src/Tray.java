@@ -283,5 +283,40 @@ public class Tray {
 		}
 		return true;
 	}
+	
+	
+	
+	// fixing
+	
+	public void addWeight(Tray t) {
+		Block[] alreadySeen = new Block[];
+		int myProximity;
+		int mySize;
+		alreadySeen = findDuplicates(t);
+		for (Block b: t) {
+			for (int i = 0; i < alreadySeen.length; i++) {
+				if (b != alreadySeen[i]) {
+					b.myProximity = b.findProximity();
+					b.myWeight = b.myProximity * b.mySize;
+				} else {
+					b.myWeight = b.myWeight - 1;
+				}
+			}
+		}
+
+		// overload this
+	}
+
+	public Block[] findDuplicates(Tray t) {
+		for (Block b: t) {
+			b = this.Block;
+			for (int i = 0; t.myBlockList.length; i++) {
+				if (b.equals(t.myBlockList[i])) {
+					b = alreadySeen[i];
+				}
+			}
+		}
+		return alreadySeen; 
+	}
 
 }
