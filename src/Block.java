@@ -54,5 +54,20 @@ public class Block {
 	}
 	
 	
+	// fixing
+	
+	public int findProximity(Tray t) {
+		int rtn;
+		for (Block b: t.myBlockList) {
+			if (b.mySize == this.mySize) {
+				int distance = b.leftCol + b.bottomRow;
+				if (distance > rtn) {
+					rtn = distance;
+				} 
+			}
+		}
+		reutrn rtn;
+	}
+	
 }
 
