@@ -1,3 +1,41 @@
+Tasks (Iter 3):
+
+To-Do:
+
+1. blockedBy method (pathfinder)
+2. Path Method Delagation function
+3. Set up priority queue based on block.myWeight
+4. Add myWeight to tray
+5. Implement priority queue
+6. Add constructor to block which weights itself based on (SimmilarBlockList)
+7. Write recalibrateweight
+
+
+
+ALTERATIONS TO INITIALIZING TRAYS
+
+1.Switch so the final tray made before initial tray.
+
+2.add constructor to tray which takes in finaltray.myblocklist
+
+3.when making init tray blocklist, 
+	set myGoals = relevantBlock(finalTray.myBlocklist)
+
+3.5. Add constructor to block which weights itself based on (SimmilarBlockList)
+	
+4.Tray constructor weights itself
+	- inits blocks with simmilarBlockList
+
+
+AFTER MOVE WEIGHT CHANGES
+
+1. Alter move function, calls reCalibrateBlockWieght on block moved	
+
+2. Alter move function, calls reCalibrateTrayWieght on Tray	
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 Tasks (Iter 2):
 
 -Pathfinder
