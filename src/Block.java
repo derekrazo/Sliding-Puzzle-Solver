@@ -10,6 +10,9 @@ public class Block {
 	public int myLength;
 	public int myHeight;
 	public int myWeight;
+	public int myDupliCount;
+	public Block[] myEndGoal;
+	
 	
 	public Block(int x1,int y1, int x2, int y2)
 	{
@@ -22,6 +25,7 @@ public class Block {
 		myHeight = (bottomRow - topRow) + 1;
 		// myWeight = (size x proximity)
 		//	    = myWeight;
+		myWeight=myLength*myHeight;
 	}
 	
 	public Block(Block previous)
@@ -34,6 +38,8 @@ public class Block {
 		myLength = previous.myLength;
 		myHeight = previous.myHeight;
 		myWeight = previous.myWeight;
+		myDupliCount=previous.myDupliCount;
+		myEndGoal=previous.myEndGoal;
 	}
 	
 	public boolean equals(Block b)
@@ -44,8 +50,7 @@ public class Block {
 			(rightCol == b.rightCol) &&
 			(bottomRow == b.bottomRow) &&
 			(myLength == b.myLength) &&
-			(myHeight == b.myHeight) &&
-			(myWeight == b.myWeight))
+			(myHeight == b.myHeight))
 		{
 			return true;
 		}
