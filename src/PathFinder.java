@@ -145,7 +145,7 @@ public class PathFinder {
 			{
 				for(Tray endTray : prevEndTrays)
 				{
-					if(startTray.equals(endTray))
+					if(endTray.equals(startTray))
 					{
 						System.out.print("Found");
 						return findPath(startTray,endTray);
