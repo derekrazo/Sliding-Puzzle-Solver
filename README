@@ -2,6 +2,8 @@ Tasks (Iter 3):
 
 To-Do:
 
+(Completed: [x])
+
 1. blockedBy method (pathfinder)
 2. Path Method Delagation function
 3. Set up priority queue based on block.myWeight
