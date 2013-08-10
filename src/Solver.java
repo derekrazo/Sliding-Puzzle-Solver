@@ -7,7 +7,7 @@ public class Solver
 	//knows initial tray configuration 
 	//and final tray configuration
 	
-	public String[] isDebugging;
+	public String isDebugging;
 	private Tray initialTray;
 	private Tray finalTray;
 	
@@ -95,7 +95,7 @@ public class Solver
 			initialTray.print();
 			System.out.println(finalTray.isOK());
 			finalTray.print();	
-		
+		}
 	}
 	
 	public String debugParser(String debugString)
