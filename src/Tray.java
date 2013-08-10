@@ -319,5 +319,66 @@ public class Tray {
 		}
 		return alreadySeen;
 	}
+		public boolean isOK(){
+		boolean annie = false;
+		boolean[][] visited = new boolean[this.myBoardState.length][this.myBoardState[0].length];
+		for (int i=0;i<this.myBlockList.length;i++){
+			int x1 = this.myBlockList[i].leftCol;
+			int x2 = this.myBlockList[i].rightCol;
+			int y1 = this.myBlockList[i].topRow;
+			int y2 = this.myBlockList[i].bottomRow;
+			for (int j=x1;j<=x2;j++)
+			{
+				for (int k=y1;k<=y2;j++)
+				{
+					if (this.myBoardState[j][k]!=i || visited[j][k]==true){
+						return annie;
+					}
+					visited[j][k]=true;
+				}
+			}
+			for (int x=0;x<visited.length;x++){
+				for (int y=0;y<visited[0].length;y++){
+					if(visited[x][y]==false && this.myBoardState[x][y]!=-1){
+						return annie;
+					}
+				}
+			}
+		}
+		if (this.myPreviousTray!=null)
+		{
+			if (this.myPreviousTray.myBlockList.length!=this.myPreviousTray.myBlockList.length ||
+					this.myPreviousTray.myBoardState.length!=this.myBoardState.length ||
+					this.myPreviousTray.myBoardState[0].length!=this.myBoardState[0].length)
+			{
+				return annie;
+			}
+			int countdiff=0;
+			for(int l =0; l<this.myBlockList.length;l++){
+				if (!this.myBlockList[l].equals(this.myPreviousTray.myBlockList[l])){
+					if ((this.myBlockList[l].leftCol==this.myPreviousTray.myBlockList[l].leftCol &&
+							this.myBlockList[l].rightCol==this.myPreviousTray.myBlockList[l].rightCol)||
+							this.myBlockList[l].topRow==this.myPreviousTray.myBlockList[l].topRow &&
+							this.myBlockList[l].bottomRow==this.myPreviousTray.myBlockList[l].bottomRow)
+					{
+						countdiff++;
+					}else{
+						return annie;
+					}
+				}
+			}
+			if (countdiff!= 1||countdiff!=0){
+				return annie;
+			}
+		}
+		
+		//check that IDs on board state match (this also checks for overlapping blocks) (done)
+		//check there are no block ID's where they shouldn't be (done)
+		//check that previousTray's size is same (done)
+		//check that all blocks but one match 
+		annie =true;
+		return annie;
+	}
+
 
 }
