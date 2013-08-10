@@ -25,6 +25,20 @@ public class Block {
 		myHeight = (bottomRow - topRow) + 1;
 
 	}
+	
+	public Block(int x1,int y1, int x2, int y2, Block[] endBlocks)
+	{
+		//takes in (x,y) of top left corner, then (x,y) of bottom right corner
+		leftCol = x1;
+		topRow = y1;
+		rightCol = x2;
+		bottomRow = y2;
+		myLength = (rightCol - leftCol) + 1;
+		myHeight = (bottomRow - topRow) + 1;
+		
+		this.similarEndBlocks = endBlocks; 
+		this.calibrateWeight();
+	}
 
 	public Block(Block previous)
 	{
