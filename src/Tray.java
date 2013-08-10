@@ -101,8 +101,18 @@ public class Tray {
 		Tray clone = new Tray(this);
 
 		//change the block representation in new tray
+		/*
+		 	AFTER MOVE WEIGHT CHANGES
+
+			1. Alter move function, calls reCalibrateBlockWieght on block moved	
+	
+			2. Alter move function, calls reCalibrateTrayWieght on Tray
+			
+		*/
+		
 		switch(direction){
 			case 1: 
+					
 					for (int i = 0;i < myBlockList[moveBlockId].myLength;i++)
 					{
 						clone.myBoardState[clone.myBlockList[moveBlockId].leftCol+i]
@@ -114,6 +124,9 @@ public class Tray {
 
 					clone.myBlockList[moveBlockId].topRow = clone.myBlockList[moveBlockId].topRow-1;
 					clone.myBlockList[moveBlockId].bottomRow = clone.myBlockList[moveBlockId].bottomRow-1;
+					
+					clone.myBlockList[moveBlockId].calibrateWeight();
+					clone.calibrateWeight();
 
 					break;
 
@@ -129,9 +142,14 @@ public class Tray {
 
 					clone.myBlockList[moveBlockId].leftCol = clone.myBlockList[moveBlockId].leftCol+1;
 					clone.myBlockList[moveBlockId].rightCol = clone.myBlockList[moveBlockId].rightCol+1;
+					
+					clone.myBlockList[moveBlockId].calibrateWeight();
+					clone.calibrateWeight();
+					
 					break;
 
 			case 3: 
+				
 					for (int i = 0;i < myBlockList[moveBlockId].myLength;i++)
 					{
 						clone.myBoardState[clone.myBlockList[moveBlockId].leftCol+i]
@@ -143,6 +161,10 @@ public class Tray {
 
 					clone.myBlockList[moveBlockId].topRow = clone.myBlockList[moveBlockId].topRow+1;
 					clone.myBlockList[moveBlockId].bottomRow = clone.myBlockList[moveBlockId].bottomRow+1;
+					
+					clone.myBlockList[moveBlockId].calibrateWeight();
+					clone.calibrateWeight();
+					
 					break;
 
 			case 4: 
@@ -157,12 +179,19 @@ public class Tray {
 
 					clone.myBlockList[moveBlockId].leftCol = clone.myBlockList[moveBlockId].leftCol-1;
 					clone.myBlockList[moveBlockId].rightCol = clone.myBlockList[moveBlockId].rightCol-1;
+					
+					clone.myBlockList[moveBlockId].calibrateWeight();
+					clone.calibrateWeight();
+					
 					break;
 		}
 
 		return clone;
 	}
-
+	
+	public void calibrateWeight() {
+		
+	}
 
 	//given input ArrayList, adds all viable moves to the ArrayList as trays
 	public void getMoves(LinkedList<Tray> fringe)
