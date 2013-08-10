@@ -5,10 +5,10 @@ To-Do:
 1. blockedBy method (pathfinder)
 2. Path Method Delagation function
 3. Set up priority queue based on block.myWeight
-4. Add myWeight to tray
+4. Add myWeight to tray [x]
 5. Implement priority queue
-6. Add constructor to block which weights itself based on (SimmilarBlockList)
-7. Write recalibrateweight
+6. Add constructor to block which weights itself based on (SimilarBlockList) [x]
+7. Write recalibrateweight [x]
 
 
 
