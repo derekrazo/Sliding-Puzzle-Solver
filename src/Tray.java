@@ -379,6 +379,21 @@ public class Tray {
 		annie =true;
 		return annie;
 	}
+	public void print(){
+		String rtn="";
+		System.out.println("---BoardState---");
+		for (int i=0;i<myBoardState.length;i++){
+			for (int j=0;j<myBoardState[0].length;j++){
+				rtn+=myBoardState[i][j];
+			}
+			System.out.println(rtn);
+		}
+		System.out.println("---BlockList----");
+		for (int i=0;i<myBlockList.length;i++){
+			System.out.println(myBlockList[i]);
+		}
+		System.out.println("----------------");
+	}
 
 
 }
