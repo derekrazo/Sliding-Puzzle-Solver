@@ -80,6 +80,14 @@ public class Tray {
 		}
 		this.similarStartBlockHelper();
 		this.similarEndBlockHelper(finalBlockList);
+		myWeight=0;
+		for (int i=0;i<myBlockList.length;i++){
+			if (myBlockList[i].similarEndBlocks==null){
+				myBlockList[i].similarEndBlocks=new Block[0];
+			}
+			myBlockList[i].calibrateWeight();
+			myWeight+=myBlockList[i].myWeight;
+		}
 	}
 		
 	private void similarStartBlockHelper(){
@@ -95,7 +103,6 @@ public class Tray {
 			myBlockList[i].similarStartBlocks=count;
 		}
 	}
-	//helper method for constructor, makes endBlock arrays
 	private void similarEndBlockHelper(Block[] finalBlockList){
 		Block[] cloneList= new Block[finalBlockList.length];
 		//set up cloneList
@@ -110,7 +117,7 @@ public class Tray {
 			}
 			//set up new temp arrayList of Blocks, add the current endlist block
 			ArrayList<Block> temp=new ArrayList<Block>();
-			temp.add(cloneList[i]);
+			temp.add(new Block(cloneList[i]));
 			cloneList[i]=null;
 			//look through the rest of end List looking for similar
 			for (int j=i+1;j<cloneList.length;j++){
@@ -121,14 +128,14 @@ public class Tray {
 					//if it's a duplicate, add to temp
 				if (cloneList[j].myLength==temp.get(0).myLength &&
 						cloneList[j].myHeight==temp.get(0).myHeight){
-					temp.add(cloneList[j]);
+					temp.add(new Block(cloneList[j]));
 					cloneList[j]=null;
 				}
 			}
 			//voodoo magic to turn arraylist into an array
 			Block [] goodexample =new Block[0];
 			Block[] tempBlock=temp.toArray(goodexample);
-			//iterate through current BlockList looking for similar and add to tempList 
+			//iterate through current BlockList looking for similar and add templist to their similar endBlocks 
 			for (int j=0;j<myBlockList.length;j++){
 				if (myBlockList[j].myHeight==temp.get(0).myHeight &&
 						myBlockList[j].myLength==temp.get(0).myLength){
