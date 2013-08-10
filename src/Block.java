@@ -3,16 +3,16 @@ public class Block {
 	//leftmost column, rightmost colum, top row, bottom row
 	//also contains the length (row) and the Height(column)
 
-	public int leftCol;
-	public int topRow;
+	public int leftCol; //upper left x position
+	public int topRow;  //upper left y position
 	public int rightCol;
 	public int bottomRow;
 	public int myLength;
 	public int myHeight;
 	public int myWeight;
-	public int myDupliCount;
-	public Block[] myEndGoal;
-	
+	public int simmilarStartBlocks;
+	//public Block[] simmilarEndBlocks = new Block[3]; for tests
+	public Block[] simmilarEndBlocks;
 	
 	public Block(int x1,int y1, int x2, int y2)
 	{
@@ -23,11 +23,9 @@ public class Block {
 		bottomRow = y2;
 		myLength = (rightCol - leftCol) + 1;
 		myHeight = (bottomRow - topRow) + 1;
-		// myWeight = (size x proximity)
-		//	    = myWeight;
-		myWeight=myLength*myHeight;
+
 	}
-	
+
 	public Block(Block previous)
 	{
 		//takes in a block, makes a clone of it
@@ -38,10 +36,10 @@ public class Block {
 		myLength = previous.myLength;
 		myHeight = previous.myHeight;
 		myWeight = previous.myWeight;
-		myDupliCount=previous.myDupliCount;
-		myEndGoal=previous.myEndGoal;
+		simmilarStartBlocks=previous.simmilarStartBlocks;
+		simmilarEndBlocks=previous.simmilarEndBlocks;
 	}
-	
+
 	public boolean equals(Block b)
 	{
 		//compares two blocks, returns true if all variables are equal
@@ -54,25 +52,29 @@ public class Block {
 		{
 			return true;
 		}
-		
+
 		return false;
 	}
 	
-	
-	// fixing
-	
-	public int findProximity(Tray t) {
-		int rtn = 0;
-		for (Block b: t.myBlockList) {
-			if (b.mySize == this.mySize) {
-				int distance = b.leftCol + b.bottomRow;
-				if (distance > rtn) {
-					rtn = distance;
-				} 
+	public int distanceFromClosestEndBlock() {
+		int leastDistance = 1000000;
+		
+		for (Block b: this.simmilarEndBlocks) 
+		{
+			int cur = (int) Math.sqrt((this.leftCol-b.leftCol)*(this.leftCol-b.leftCol) + 
+					 			   (this.topRow-b.topRow)*(this.topRow-b.topRow));
+			if (cur < leastDistance)
+			{
+				leastDistance = cur;
 			}
-		}
-		return rtn;
+			
+		} 
+		return leastDistance;
 	}
 	
-}
+	public void calibrateWeight() {
+		//Will add more considerations
+		myWeight = this.distanceFromClosestEndBlock();
+	}
 
+}
