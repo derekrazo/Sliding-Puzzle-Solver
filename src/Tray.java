@@ -92,7 +92,7 @@ public class Tray {
 					count++;
 				}
 			}
-			myBlockList[i].mySimilarStartBlocks=count;
+			myBlockList[i].similarStartBlocks=count;
 		}
 	}
 	//helper method for constructor, makes endBlock arrays
@@ -132,7 +132,7 @@ public class Tray {
 			for (int j=0;j<myBlockList.length;j++){
 				if (myBlockList[j].myHeight==temp.get(0).myHeight &&
 						myBlockList[j].myLength==temp.get(0).myLength){
-					myBlockList[j].mySimilarEndBlocks=tempBlock;
+					myBlockList[j].similarEndBlocks=tempBlock;
 				}
 			}
 			
