@@ -126,6 +126,49 @@ public class PathFinder {
 			endTrays = endFringe;
 		}
 	}
+	
+	public String [] solution2() throws NoAnswerException
+	{
+		while(true)
+		{
+			//Debugging
+			/*
+			System.out.println("Running");
+			System.out.println(startTrays.size());
+			System.out.println(endTrays.size());
+			*/
+
+			//Inefficient as FUCK!
+			//iterates through all of startTray and endTray, looking for a match
+			//if a match is found, return path
+			for(Tray startTray : prevStartTrays)
+			{
+				for(Tray endTray : prevEndTrays)
+				{
+					if(startTray.equals(endTray))
+					{
+						System.out.print("Found");
+						return findPath(startTray,endTray);
+					}
+				}
+			}
+
+			//initialize new fringes
+			LinkedList<Tray> startFringe = new LinkedList<Tray>();
+			LinkedList<Tray> endFringe = new LinkedList<Tray>();
+			//add all possible moves to startfringe
+			while(startTrays.size()!=0)
+			{
+				prevStartTrays.add(startTrays.peek());
+				startTrays.pop().getMoves(startFringe);
+			}
+
+			//Can make this more efficient
+			startFringe.removeAll(prevStartTrays);
+			//removes all things stored in hashtables
+			startTrays = startFringe;
+		}
+	}
 
 	public String[] findPath(Tray toStart, Tray toFinish) {
 		
