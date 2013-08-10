@@ -143,13 +143,10 @@ public class PathFinder {
 			//if a match is found, return path
 			for(Tray startTray : prevStartTrays)
 			{
-				for(Tray endTray : prevEndTrays)
+				if(endTrays.peek().equals(startTray))
 				{
-					if(endTray.equals(startTray))
-					{
-						System.out.print("Found");
-						return findPath(startTray,endTray);
-					}
+					System.out.print("Found");
+					return findPath(startTray,endTray);
 				}
 			}
 
