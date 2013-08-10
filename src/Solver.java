@@ -86,8 +86,9 @@ public class Solver
 			}
 		}
 		String [] goodexample =new String[0];
-		initialTray=new Tray(input1.toArray(goodexample),size);
 		finalTray=new Tray(input2.toArray(goodexample),size);
+		initialTray=new Tray(input1.toArray(goodexample),size);
+		
 		//Debugging Complex
 		if(isDebugging=="debug"||isDebugging=="solver"){
 			System.out.println(initialTray.isOK());
