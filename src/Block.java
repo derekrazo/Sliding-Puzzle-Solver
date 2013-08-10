@@ -88,8 +88,27 @@ public class Block {
 	}
 	
 	public void calibrateWeight() {
-		//Will add more considerations
-		myWeight = this.distanceFromClosestEndBlock();
+		/*
+		 * Will add more considerations:
+		 * 
+		 * 1. distance from goal
+		 * 2. how many similar blocks are in the start and end?
+		 * 		-equal number in both doesnt scale at all
+		 * 		-more in start = lower weight 
+		 * 		-more in end = 
+		 * 		-add number of end position / number of start positions
+		 * 3.
+		 * 4.
+		 * 5.
+		 * 6.
+		 * 7.
+		 * 8.
+		 * 
+		 * */
+		
+		myWeight = ((similarEndBlocks.length + ((this.myHeight*this.myLength) / 
+				  			 this.distanceFromClosestEndBlock()))
+				  	/ similarStartBlocks);
 	}
 
 }
