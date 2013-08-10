@@ -39,6 +39,32 @@ public class Block {
 		simmilarStartBlocks=previous.simmilarStartBlocks;
 		simmilarEndBlocks=previous.simmilarEndBlocks;
 	}
+	
+	// fixing
+	
+	public weightedBlock(int x1,int y1, int x2, int y2, Tray endTray)
+	{
+		//takes in (x,y) of top left corner, then (x,y) of bottom right corner
+		leftCol = x1;
+		topRow = y1;
+		rightCol = x2;
+		bottomRow = y2;
+		myLength = (rightCol - leftCol) + 1;
+		myHeight = (bottomRow - topRow) + 1;
+		
+		Block[] holdEndTray = endTray.myBlockList;
+		for (int i = 0; i < holdEndTray.length; i++) {
+			for (int j = i + 1; j < holdEndTray.length; j++) {
+				if (holdEndTray[i].mySize == holdEndTray[j].mySize) {
+					Block[] "size" + mySize = new Block[];
+					
+				}
+			}
+		}
+		
+		myWeight = ; // called function
+	}
+	
 
 	public boolean equals(Block b)
 	{
