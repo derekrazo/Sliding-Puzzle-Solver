@@ -126,7 +126,7 @@ public class Tray {
 					clone.myBlockList[moveBlockId].bottomRow = clone.myBlockList[moveBlockId].bottomRow-1;
 					
 					clone.myBlockList[moveBlockId].calibrateWeight();
-					clone.calibrateWeight();
+					clone.calibrateWeight(moveBlockId);
 
 					break;
 
@@ -144,7 +144,7 @@ public class Tray {
 					clone.myBlockList[moveBlockId].rightCol = clone.myBlockList[moveBlockId].rightCol+1;
 					
 					clone.myBlockList[moveBlockId].calibrateWeight();
-					clone.calibrateWeight();
+					clone.calibrateWeight(moveBlockId);
 					
 					break;
 
@@ -163,7 +163,7 @@ public class Tray {
 					clone.myBlockList[moveBlockId].bottomRow = clone.myBlockList[moveBlockId].bottomRow+1;
 					
 					clone.myBlockList[moveBlockId].calibrateWeight();
-					clone.calibrateWeight();
+					clone.calibrateWeight(moveBlockId);
 					
 					break;
 
@@ -181,16 +181,21 @@ public class Tray {
 					clone.myBlockList[moveBlockId].rightCol = clone.myBlockList[moveBlockId].rightCol-1;
 					
 					clone.myBlockList[moveBlockId].calibrateWeight();
-					clone.calibrateWeight();
+					clone.calibrateWeight(moveBlockId);
 					
 					break;
 		}
 
 		return clone;
 	}
+
+
+	public void calibrateWeight(int blockId) 
+	{
+		//subtract old moved block weight, add new moved block weight
+		this.myWeight -= this.myPreviousTray.myBlockList[blockId].myWeight;
+		this.myWeight += this.myBlockList[blockId].myWeight;
 	
-	public void calibrateWeight() {
-		
 	}
 
 	//given input ArrayList, adds all viable moves to the ArrayList as trays
