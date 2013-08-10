@@ -10,9 +10,9 @@ public class Block {
 	public int myLength;
 	public int myHeight;
 	public int myWeight;
-	public int simmilarStartBlocks;
+	public int similarStartBlocks;
 	//public Block[] simmilarEndBlocks = new Block[3]; for tests
-	public Block[] simmilarEndBlocks;
+	public Block[] similarEndBlocks;
 	
 	public Block(int x1,int y1, int x2, int y2)
 	{
@@ -36,33 +36,8 @@ public class Block {
 		myLength = previous.myLength;
 		myHeight = previous.myHeight;
 		myWeight = previous.myWeight;
-		simmilarStartBlocks=previous.simmilarStartBlocks;
-		simmilarEndBlocks=previous.simmilarEndBlocks;
-	}
-	
-	// fixing
-	
-	public weightedBlock(int x1,int y1, int x2, int y2, Tray endTray)
-	{
-		//takes in (x,y) of top left corner, then (x,y) of bottom right corner
-		leftCol = x1;
-		topRow = y1;
-		rightCol = x2;
-		bottomRow = y2;
-		myLength = (rightCol - leftCol) + 1;
-		myHeight = (bottomRow - topRow) + 1;
-		
-		Block[] holdEndTray = endTray.myBlockList;
-		for (int i = 0; i < holdEndTray.length; i++) {
-			for (int j = i + 1; j < holdEndTray.length; j++) {
-				if (holdEndTray[i].mySize == holdEndTray[j].mySize) {
-					Block[] "size" + mySize = new Block[];
-					
-				}
-			}
-		}
-		
-		myWeight = ; // called function
+		similarStartBlocks=previous.similarStartBlocks;
+		similarEndBlocks=previous.similarEndBlocks;
 	}
 	
 
@@ -85,7 +60,7 @@ public class Block {
 	public int distanceFromClosestEndBlock() {
 		int leastDistance = 1000000;
 		
-		for (Block b: this.simmilarEndBlocks) 
+		for (Block b: this.similarEndBlocks) 
 		{
 			int cur = (int) Math.sqrt((this.leftCol-b.leftCol)*(this.leftCol-b.leftCol) + 
 					 			   (this.topRow-b.topRow)*(this.topRow-b.topRow));
