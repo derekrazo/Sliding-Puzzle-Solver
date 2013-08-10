@@ -33,6 +33,33 @@ public class Tray {
 		//takes in a String Array 
 		// of format [x y x y,x y x y, etc] where each cell is the points for one block
 		// as well as a string size of format "x y" 
+		
+		//is used for final tray
+		myPreviousTray = null;
+		myBlockList = new Block[config.length];
+		String[] holder = size.split(" ");
+		myBoardState = new int[Integer.parseInt(holder[0])][Integer
+				.parseInt(holder[1])];
+		for (int n = 0; n < myBoardState.length; n++) {
+			Arrays.fill(myBoardState[n], -1);
+		}
+		for (int i = 0; i < myBlockList.length; i++) {
+			String[] block = config[i].split(" ");
+			myBlockList[i] = new Block(Integer.parseInt(block[0]),
+					Integer.parseInt(block[1]), Integer.parseInt(block[2]),
+					Integer.parseInt(block[3]));
+			//
+			for (int j = myBlockList[i].leftCol; j <= myBlockList[i].rightCol; j++) {
+				Arrays.fill(myBoardState[j], myBlockList[i].topRow,
+						myBlockList[i].bottomRow + 1, i);
+			}
+		}
+		this.similarStartBlockHelper();
+		
+	}
+	
+	public Tray(String[] config, String size, Block[] finalBlockList){
+		//constructor for initial tray that uses final block list to establish weights
 		myPreviousTray = null;
 		myBlockList = new Block[config.length];
 		String[] holder = size.split(" ");
@@ -50,6 +77,65 @@ public class Tray {
 				Arrays.fill(myBoardState[j], myBlockList[i].topRow,
 						myBlockList[i].bottomRow + 1, i);
 			}
+		}
+		this.similarStartBlockHelper();
+		this.similarEndBlockHelper(finalBlockList);
+	}
+		
+	private void similarStartBlockHelper(){
+		//finds number of duplicates and initializes variable.
+		for (int i=0;i<myBlockList.length;i++){
+			int count=-1;
+			for (int j=0;j<myBlockList.length;j++){
+				if( myBlockList[j].myHeight==myBlockList[i].myHeight &&
+						myBlockList[j].myLength==myBlockList[i].myLength){
+					count++;
+				}
+			}
+			myBlockList[i].mySimilarStartBlocks=count;
+		}
+	}
+	//helper method for constructor, makes endBlock arrays
+	private void similarEndBlockHelper(Block[] finalBlockList){
+		Block[] cloneList= new Block[finalBlockList.length];
+		//set up cloneList
+		for (int i = 0;i<finalBlockList.length;i++){
+			cloneList[i]=new Block(finalBlockList[i]);	
+		}
+		//iterate through the end List
+		for(int i=0;i<cloneList.length;i++){
+			//if it's been visited already skip
+			if (cloneList[i]==null){
+				continue;
+			}
+			//set up new temp arrayList of Blocks, add the current endlist block
+			ArrayList<Block> temp=new ArrayList<Block>();
+			temp.add(cloneList[i]);
+			cloneList[i]=null;
+			//look through the rest of end List looking for similar
+			for (int j=i+1;j<cloneList.length;j++){
+				// if it's been visited already skip
+				if (cloneList[i]==null){
+					continue;
+				} else
+					//if it's a duplicate, add to temp
+				if (cloneList[j].myLength==temp.get(0).myLength &&
+						cloneList[j].myHeight==temp.get(0).myHeight){
+					temp.add(cloneList[j]);
+					cloneList[j]=null;
+				}
+			}
+			//voodoo magic to turn arraylist into an array
+			Block [] goodexample =new Block[0];
+			Block[] tempBlock=temp.toArray(goodexample);
+			//iterate through current BlockList looking for similar and add to tempList 
+			for (int j=0;j<myBlockList.length;j++){
+				if (myBlockList[j].myHeight==temp.get(0).myHeight &&
+						myBlockList[j].myLength==temp.get(0).myLength){
+					myBlockList[j].mySimilarEndBlocks=tempBlock;
+				}
+			}
+			
 		}
 	}
 	
