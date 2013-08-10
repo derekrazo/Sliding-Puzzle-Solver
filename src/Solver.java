@@ -29,6 +29,9 @@ public class Solver
 		}catch(NoAnswerException e){
 			System.exit(1);
 		}
+		if (output==null){
+			System.exit(1);
+		}
 		for(int i=0;i<output.length;i++)
 		{
 			System.out.println(output[i]);
@@ -85,13 +88,18 @@ public class Solver
 		String [] goodexample =new String[0];
 		initialTray=new Tray(input1.toArray(goodexample),size);
 		finalTray=new Tray(input2.toArray(goodexample),size);
+		//Debugging Complex
+		if(isDebugging=="debug"||isDebugging=="solver"){
+			System.out.println(initialTray.isOK());
+			initialTray.print();
+			System.out.println(finalTray.isOK());
+			finalTray.print();	
 		
 	}
 	
-	public String[] debugParser(String debugString)
+	public String debugParser(String debugString)
 	//takes in InputSource and returns debugging array
 	{
-		String [] output= new String [1];
 		if (!debugString.substring(0, 2).equals("-o")){
 			return null;
 		}
@@ -100,9 +108,13 @@ public class Solver
 		case "options": //add in descriptions for debug options here
 			System.out.println("options: prints all possible args");
 			break;
+		case "debug":
+		case "solver":
+		case "solution":
+		case "pathfind":
+		case "tray": return args;
+		default: return null;
 		}
-		
-		output[0]="debug";
-		return output;
+		return null;
 	}
 }
