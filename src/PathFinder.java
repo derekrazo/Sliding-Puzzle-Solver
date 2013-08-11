@@ -146,7 +146,7 @@ public class PathFinder {
 				if(endTrays.peek().equals(startTray))
 				{
 					System.out.print("Found");
-					return findPath(startTray,endTray);
+					return findPath(startTray,endTrays.peek());
 				}
 			}
 
