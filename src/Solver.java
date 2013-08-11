@@ -90,7 +90,7 @@ public class Solver
 		initialTray=new Tray(input1.toArray(goodexample),size,finalTray.myBlockList);
 		
 		//Debugging Complex
-		if(isDebugging=="debug"||isDebugging=="solver"){
+		if(isDebugging.equals("debug")||isDebugging.equals("solver")){
 			System.out.println(initialTray.isOK());
 			initialTray.print();
 			System.out.println(finalTray.isOK());
