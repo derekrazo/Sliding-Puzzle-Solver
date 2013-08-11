@@ -415,7 +415,7 @@ public class Tray {
 	
 	
 	// fixing
-	
+	/*
 	public void addWeight(Tray t) {
 		int myProximity;
 		int mySize;
@@ -447,6 +447,7 @@ public class Tray {
 		}
 		return alreadySeen;
 	}
+	*/
 		public boolean isOK(){
 		boolean annie = false;
 		boolean[][] visited = new boolean[this.myBoardState.length][this.myBoardState[0].length];
