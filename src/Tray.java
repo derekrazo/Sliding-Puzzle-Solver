@@ -28,6 +28,7 @@ public class Tray {
 	public int[][] myBoardState;
 	public Tray myPreviousTray;
 	public Block[] myBlockList;
+	public int myWeight;
 
 	public Tray(String[] config, String size) {
 		//takes in a String Array 
