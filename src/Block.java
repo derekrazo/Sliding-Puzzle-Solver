@@ -84,7 +84,7 @@ public class Block {
 			}
 			
 		} 
-		return leastDistance;
+		return Math.abs(leastDistance);
 	}
 	
 	public void calibrateWeight() {
@@ -107,7 +107,7 @@ public class Block {
 		 * */
 		
 		myWeight = ((similarEndBlocks.length + ((this.myHeight*this.myLength) / 
-				  			 this.distanceFromClosestEndBlock()))
+				  			 this.distanceFromClosestEndBlock()+1))
 				  	/ similarStartBlocks);
 	}
 
