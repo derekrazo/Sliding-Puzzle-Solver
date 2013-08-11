@@ -123,7 +123,7 @@ public class Tray {
 			//look through the rest of end List looking for similar
 			for (int j=i+1;j<cloneList.length;j++){
 				// if it's been visited already skip
-				if (cloneList[i]==null){
+				if (cloneList[j]==null){
 					continue;
 				} else
 					//if it's a duplicate, add to temp
