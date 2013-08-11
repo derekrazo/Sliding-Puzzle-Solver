@@ -9,7 +9,7 @@ public class Block {
 	public int bottomRow;
 	public int myLength;
 	public int myHeight;
-	public int myWeight;
+	public double myWeight;
 	public int similarStartBlocks;
 	//public Block[] simmilarEndBlocks = new Block[3]; for tests
 	public Block[] similarEndBlocks;
