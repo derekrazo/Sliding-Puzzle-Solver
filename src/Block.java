@@ -71,19 +71,20 @@ public class Block {
 		return false;
 	}
 	
-	public int distanceFromClosestEndBlock() {
-		int leastDistance = 1000000;
+	public double distanceFromClosestEndBlock() {
+		double leastDistance = 1000000;
 		
 		for (Block b: this.similarEndBlocks) 
 		{
-			int cur = (int) Math.sqrt((this.leftCol-b.leftCol)*(this.leftCol-b.leftCol) + 
-					 			   (this.topRow-b.topRow)*(this.topRow-b.topRow));
+			double cur = Math.sqrt(((this.leftCol-b.leftCol)*(this.leftCol-b.leftCol)) + 
+					 			   ((this.topRow-b.topRow)*(this.topRow-b.topRow)));
 			if (cur < leastDistance)
 			{
 				leastDistance = cur;
 			}
 			
 		} 
+		System.out.println(leastDistance);
 		return Math.abs(leastDistance);
 	}
 	
@@ -107,7 +108,7 @@ public class Block {
 		 * */
 		
 		myWeight = ((similarEndBlocks.length + ((this.myHeight*this.myLength) / 
-				  			 this.distanceFromClosestEndBlock()+1))
+				  			this.distanceFromClosestEndBlock()+1))
 				  	/ similarStartBlocks);
 	}
 
