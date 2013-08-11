@@ -1,6 +1,8 @@
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Comparator;
+import java.util.PriorityQueue;
 
 
 public class PathFinder {
@@ -8,16 +10,20 @@ public class PathFinder {
 	// has two linkedlists to store moves possible
 	// has two hashsets to keep track of what moves have already been examined
 	// has a path arrayList for constructing the solution
-	
+
 	String myTrayCode;
 	LinkedList<Tray> startTrays;
 	LinkedList<Tray> endTrays;
-	
+
 	HashSet<Tray> prevStartTrays;
 	HashSet<Tray> prevEndTrays;
-	
+
 	ArrayList<Tray> path;
 	
+	//Weighting Queue
+	Comparator<Tray> comparator;
+	PriorityQueue<Tray> startQueue;
+
 	public PathFinder(Tray startTray, Tray endTray)
 	{
 		// takes in Tray representing initial state, tray representing goal
@@ -25,14 +31,37 @@ public class PathFinder {
 		// initializes the rest of the instance variables
 		startTrays = new LinkedList<Tray>();
 		startTrays.add(startTray);
-		
+
 		endTrays = new LinkedList<Tray>();
 		endTrays.add(endTray);
-		
+
 		prevStartTrays = new HashSet<Tray>();
 		prevEndTrays = new HashSet<Tray>();
 		
+		comparator = new WeightComparator();
+        	startQueue = new PriorityQueue<Tray>(1000000, comparator);
+        	startQueue.add(startTray);
+
 		path = new ArrayList<Tray>();
+	}
+	
+	public class WeightComparator implements Comparator<Tray>
+	{
+	    @Override
+	    public int compare(Tray x, Tray y)
+	    {
+	        // Assume neither string is null. Real code should
+	        // probably be more robust
+	        if (x.myWeight < y.myWeight)
+	        {
+	            return -1;
+	        }
+	        if (x.myWeight > y.myWeight)
+	        {
+	            return 1;
+	        }
+	        return 0;
+	    }
 	}
 	
 	public String [] solution() throws NoAnswerException
@@ -40,12 +69,10 @@ public class PathFinder {
 		while(true)
 		{
 			//Debugging
-			if (Solver.isDebugging.equals("debug")||Solver.isDebugging.equals("solution")){
 			System.out.println("Running");
 			System.out.println(startTrays.size());
 			System.out.println(endTrays.size());
-			}
-			
+
 			//Inefficient as FUCK!
 			//iterates through all of startTray and endTray, looking for a match
 			//if a match is found, return path
@@ -55,14 +82,12 @@ public class PathFinder {
 				{
 					if(startTray.equals(endTray))
 					{
-						if(Solver.isDebugging.equals("debug")||Solver.isDebugging.equals("solution")){
-							System.out.print("Found");
-						}
+						System.out.print("Found");
 						return findPath(startTray,endTray);
 					}
 				}
 			}
-			
+
 			//initialize new fringes
 			LinkedList<Tray> startFringe = new LinkedList<Tray>();
 			LinkedList<Tray> endFringe = new LinkedList<Tray>();
@@ -70,7 +95,7 @@ public class PathFinder {
 			while(startTrays.size()!=0)
 			{
 				prevStartTrays.add(startTrays.peek());
-				
+
 				/*
 				if(startTrays.peek().equals(endTrays.peek()))
 				{
@@ -88,7 +113,7 @@ public class PathFinder {
 					return findPath(startTrays.pop(),endTrays.pop());
 				}
 				*/
-				
+
 				//getMoves Returns iterator
 				startTrays.pop().getMoves(startFringe);
 			}
@@ -96,7 +121,7 @@ public class PathFinder {
 			while(endTrays.size()!=0)
 			{
 				prevEndTrays.add(endTrays.peek());
-				
+
 				/*
 				if(endTrays.peek().equals(startTrays.peek()))
 				{
@@ -114,7 +139,7 @@ public class PathFinder {
 					return findPath(startTrays.pop(),endTrays.pop());
 				}
 				*/
-				
+
 				//getMoves Returns collection
 				endTrays.pop().getMoves(endFringe);
 			}
@@ -123,10 +148,10 @@ public class PathFinder {
 			startFringe.removeAll(prevStartTrays);
 			//removes all things stored in hashtables
 			startTrays = startFringe;
-			
+
 			//Can make this more efficient
 			endFringe.removeAll(prevEndTrays);
-			
+
 			endTrays = endFringe;
 		}
 	}
@@ -156,23 +181,20 @@ public class PathFinder {
 
 			//initialize new fringes
 			LinkedList<Tray> startFringe = new LinkedList<Tray>();
-			LinkedList<Tray> endFringe = new LinkedList<Tray>();
-			//add all possible moves to startfringe
-			while(startTrays.size()!=0)
-			{
-				prevStartTrays.add(startTrays.peek());
-				startTrays.pop().getMoves(startFringe);
-			}
 
+			//add all possible moves to startfringe
+			prevStartTrays.add(startQueue.peek());
+			startQueue.poll().getMoves(startFringe);
+			
+			startQueue.addAll(startFringe);
+			
 			//Can make this more efficient
-			startFringe.removeAll(prevStartTrays);
-			//removes all things stored in hashtables
-			startTrays = startFringe;
+			startQueue.removeAll(prevStartTrays);
 		}
 	}
 
 	public String[] findPath(Tray toStart, Tray toFinish) {
-		
+
 		//For Debugging
 		/*
 		int [][] boardStart = toStart.myBoardState;
@@ -200,7 +222,7 @@ public class PathFinder {
 		
 		System.out.println(toStart.equals(toFinish));
 		*/
-		
+
 		path.add(toStart);
 		findPathBack(toStart);
 		findPathForward(toFinish);
@@ -210,7 +232,7 @@ public class PathFinder {
 
 		for (int i = 0; i < path.size()-1; i++) {
 			rtnPath[i] = path.get(i).moveMade(path.get(i + 1));
-			
+
 			//For Debugging
 			/*
 			int [][] board = path.get(i).myBoardState;
@@ -224,7 +246,7 @@ public class PathFinder {
 			}
 			System.out.println();
 			*/
-			
+
 		}
 
 		return rtnPath;
