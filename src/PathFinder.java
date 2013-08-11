@@ -40,9 +40,11 @@ public class PathFinder {
 		while(true)
 		{
 			//Debugging
+			if (Solver.isDebugging.equals("debug")||Solver.isDebugging.equals("PathFind")){
 			System.out.println("Running");
 			System.out.println(startTrays.size());
 			System.out.println(endTrays.size());
+			}
 			
 			//Inefficient as FUCK!
 			//iterates through all of startTray and endTray, looking for a match
