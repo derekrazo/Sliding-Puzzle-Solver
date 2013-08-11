@@ -40,7 +40,7 @@ public class PathFinder {
 		while(true)
 		{
 			//Debugging
-			if (Solver.isDebugging.equals("debug")||Solver.isDebugging.equals("pathfind")){
+			if (Solver.isDebugging.equals("debug")||Solver.isDebugging.equals("solution")){
 			System.out.println("Running");
 			System.out.println(startTrays.size());
 			System.out.println(endTrays.size());
@@ -55,7 +55,7 @@ public class PathFinder {
 				{
 					if(startTray.equals(endTray))
 					{
-						if(Solver.isDebugging.equals("debug")||Solver.isDebugging.equals("pathfind")){
+						if(Solver.isDebugging.equals("debug")||Solver.isDebugging.equals("solution")){
 							System.out.print("Found");
 						}
 						return findPath(startTray,endTray);
