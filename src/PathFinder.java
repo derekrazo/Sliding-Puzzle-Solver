@@ -1,8 +1,12 @@
+import java.lang.management.ManagementFactory;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
+import java.util.Random;
 
 
 public class PathFinder {
@@ -19,10 +23,10 @@ public class PathFinder {
 	HashSet<Tray> prevEndTrays;
 
 	ArrayList<Tray> path;
-	
+
 	//Weighting Queue
 	Comparator<Tray> comparator;
-	PriorityQueue<Tray> startQueue;
+	PriorityQueue<Tray> weightQueue;
 
 	public PathFinder(Tray startTray, Tray endTray)
 	{
@@ -37,33 +41,32 @@ public class PathFinder {
 
 		prevStartTrays = new HashSet<Tray>();
 		prevEndTrays = new HashSet<Tray>();
-		
+
 		comparator = new WeightComparator();
-        	startQueue = new PriorityQueue<Tray>(1000000, comparator);
-        	startQueue.add(startTray);
+		weightQueue = new PriorityQueue<Tray>(10, comparator);
+		weightQueue.add(startTray);
+		prevStartTrays.add(startTray);
 
 		path = new ArrayList<Tray>();
 	}
-	
+
 	public class WeightComparator implements Comparator<Tray>
 	{
 	    @Override
 	    public int compare(Tray x, Tray y)
 	    {
-	        // Assume neither string is null. Real code should
-	        // probably be more robust
-	        if (x.myWeight < y.myWeight)
+	        if (x.myWeight > y.myWeight)
 	        {
 	            return -1;
 	        }
-	        if (x.myWeight > y.myWeight)
+	        if (x.myWeight < y.myWeight)
 	        {
 	            return 1;
 	        }
 	        return 0;
 	    }
 	}
-	
+
 	public String [] solution() throws NoAnswerException
 	{
 		while(true)
@@ -115,7 +118,7 @@ public class PathFinder {
 				*/
 
 				//getMoves Returns iterator
-				startTrays.pop().getMoves(startFringe);
+				startTrays.pop().getMoves(startFringe, prevStartTrays);
 			}
 			//add all possible moves to end fringe (going backwards)
 			while(endTrays.size()!=0)
@@ -141,7 +144,7 @@ public class PathFinder {
 				*/
 
 				//getMoves Returns collection
-				endTrays.pop().getMoves(endFringe);
+				endTrays.pop().getMoves(endFringe, prevEndTrays);
 			}
 
 			//Can make this more efficient
@@ -155,43 +158,138 @@ public class PathFinder {
 			endTrays = endFringe;
 		}
 	}
-	
+
 	public String [] solution2() throws NoAnswerException
 	{
-		while(true)
-		{
-			//Debugging
-			/*
-			System.out.println("Running");
-			System.out.println(startTrays.size());
-			System.out.println(endTrays.size());
-			*/
-
-			//Inefficient as FUCK!
-			//iterates through all of startTray and endTray, looking for a match
-			//if a match is found, return path
-			for(Tray startTray : prevStartTrays)
-			{
-				if(endTrays.peek().equals(startTray))
+		int count = 0;
+		
+		while(true){
+			
+			//while(count < 10)
+			//{
+		
+				//Debugging
+				/*
+				System.out.println("Running");
+				System.out.println(startTrays.size());
+				System.out.println(endTrays.size());
+				*/
+	
+			
+				for(Tray startTray : prevStartTrays)
 				{
-					System.out.println("Found");
-					return findPath(startTray,endTrays.peek());
+					if(endTrays.peek().equals(startTray))
+					{
+						System.out.println("Found");
+						return findPath(startTray,endTrays.peek());
+					}
 				}
+				
+				
+				
+	
+				LinkedList<Tray> possibleMoves = new LinkedList<Tray>();
+				
+				weightQueue.poll().getMoves(possibleMoves, prevStartTrays);
+				
+				weightQueue.addAll(possibleMoves);
+				prevStartTrays.addAll(possibleMoves);
+				
+				//System.out.println(" leftCol: " + weightQueue.peek().myBlockList[0].leftCol + " topRow: " + weightQueue.peek().myBlockList[0].topRow);
+			
+			    /* Total memory currently in use by the JVM */
+				/*
+			    System.out.println("Free Heap memory (bytes): " + 
+			    		(ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getMax() - 
+			    		 ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed()));
+				/*
+			    if ((ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getMax() - 
+			    	 ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed()) < 1000000)
+			    {
+			    	//prevStartTrays.clear();
+					double ave = 0; 
+					
+				    System.out.println("CLEANING:"); 
+
+			    	for(Tray t : weightQueue)
+			    	{
+						//ave += t.myWeight; 
+					    //System.out.println("t. weight : " + t.myWeight); 
+			    	}
+			    	
+			    	//ave = ave / weightQueue.size();
+			    	
+				    //System.out.println("AVE:" + ave); 
+
+			    	for(Tray t : weightQueue)
+			    	{
+						if (t.myWeight < ave)
+						{
+							weightQueue.remove(t);
+						} 
+			    	}
+			    	
+			    	
+			    	//gc();
+			    }
+				*/
+				
+			    System.out.println("Cycles :" + count); 
+			    System.out.println("weightQueue size :" + weightQueue.size()); 
+				count ++;
+
+				
 			}
-
-			//initialize new fringes
-			LinkedList<Tray> startFringe = new LinkedList<Tray>();
-
-			//add all possible moves to startfringe
-			prevStartTrays.add(startQueue.peek());
-			startQueue.poll().getMoves(startFringe);
 			
-			startQueue.addAll(startFringe);
+			/*
+	
+				for(Tray startTray : prevStartTrays)
+				{
+					if(endTrays.peek().equals(startTray))
+					{
+						System.out.println("Found");
+						return findPath(startTray,endTrays.peek());
+					}
+				}
+	
+				LinkedList<Tray> possibleMoves = new LinkedList<Tray>();
+
+				Tray combo = weightQueue.peek();
+				
+				for (int i = 0;i < 20;i++)
+				{
+					combo.getMoves(possibleMoves, prevStartTrays);
+					//System.out.println("possible moves size :" + possibleMoves.size());
+					if (possibleMoves.size() != 0){
+						combo = possibleMoves.get(0);
+						weightQueue.addAll(possibleMoves);
+						prevStartTrays.addAll(possibleMoves);
+					}
+				}
+				
+				
+				//System.out.println(" leftCol: " + weightQueue.peek().myBlockList[0].leftCol + " topRow: " + weightQueue.peek().myBlockList[0].topRow);
+		
+				count = 0;
 			
-			//Can make this more efficient
-			startQueue.removeAll(prevStartTrays);
+			
 		}
+		*/
 	}
+	
+	/**
+	    * This method guarantees that garbage collection is
+	    * done unlike <code>{@link System#gc()}</code>
+	    */
+	   public static void gc() {
+	     Object obj = new Object();
+	     WeakReference ref = new WeakReference<Object>(obj);
+	     obj = null;
+	     while(ref.get() != null) {
+	       System.gc();
+	     }
+	   }
+		
 
 	public String[] findPath(Tray toStart, Tray toFinish) {
 
