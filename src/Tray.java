@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Arrays;
 
@@ -24,17 +26,17 @@ public class Tray {
 	//myBoardState is a doubleArray showing position of blocks
 	//myBlockList contains all block objects on the tray
 	//myPreviousTray points back to the Tray preceding this one
-	
+
 	public int[][] myBoardState;
 	public Tray myPreviousTray;
 	public Block[] myBlockList;
-	public int myWeight;
+	public double myWeight;
 
 	public Tray(String[] config, String size) {
 		//takes in a String Array 
 		// of format [x y x y,x y x y, etc] where each cell is the points for one block
 		// as well as a string size of format "x y" 
-		
+
 		//is used for final tray
 		myPreviousTray = null;
 		myBlockList = new Block[config.length];
@@ -56,9 +58,14 @@ public class Tray {
 			}
 		}
 		this.similarStartBlockHelper();
-		
+		this.calibrateWeight();
 	}
 	
+	public Tray(double weight)
+	{
+		myWeight = weight;
+	}
+
 	public Tray(String[] config, String size, Block[] finalBlockList){
 		//constructor for initial tray that uses final block list to establish weights
 		myPreviousTray = null;
@@ -89,8 +96,9 @@ public class Tray {
 			myBlockList[i].calibrateWeight();
 			myWeight+=myBlockList[i].myWeight;
 		}
+		this.calibrateWeight();
 	}
-		
+
 	private void similarStartBlockHelper(){
 		//finds number of duplicates and initializes variable.
 		for (int i=0;i<myBlockList.length;i++){
@@ -103,6 +111,7 @@ public class Tray {
 			}
 			myBlockList[i].similarStartBlocks=count;
 		}
+		this.calibrateWeight();
 	}
 	private void similarEndBlockHelper(Block[] finalBlockList){
 		Block[] cloneList= new Block[finalBlockList.length];
@@ -112,14 +121,17 @@ public class Tray {
 		}
 		//iterate through the end List
 		for(int i=0;i<cloneList.length;i++){
+			
 			//if it's been visited already skip
 			if (cloneList[i]==null){
 				continue;
 			}
+			
 			//set up new temp arrayList of Blocks, add the current endlist block
 			ArrayList<Block> temp=new ArrayList<Block>();
 			temp.add(new Block(cloneList[i]));
 			cloneList[i]=null;
+			
 			//look through the rest of end List looking for similar
 			for (int j=i+1;j<cloneList.length;j++){
 				// if it's been visited already skip
@@ -127,15 +139,21 @@ public class Tray {
 					continue;
 				} else
 					//if it's a duplicate, add to temp
+					
 				if (cloneList[j].myLength==temp.get(0).myLength &&
 						cloneList[j].myHeight==temp.get(0).myHeight){
 					temp.add(new Block(cloneList[j]));
 					cloneList[j]=null;
 				}
 			}
+			
 			//voodoo magic to turn arraylist into an array
 			Block [] goodexample =new Block[0];
-			Block[] tempBlock=temp.toArray(goodexample);
+			Block [] tempBlock=temp.toArray(goodexample);
+			//System.out.println("made it :" + tempBlock[0].leftCol + " " + tempBlock[0].topRow );
+			//System.out.println("made it2 :" + tempBlock.length );
+
+			
 			//iterate through current BlockList looking for similar and add templist to their similar endBlocks 
 			for (int j=0;j<myBlockList.length;j++){
 				if (myBlockList[j].myHeight==temp.get(0).myHeight &&
@@ -143,10 +161,12 @@ public class Tray {
 					myBlockList[j].similarEndBlocks=tempBlock;
 				}
 			}
-			
+
 		}
+		this.calibrateWeight();
+
 	}
-	
+
 	//direction is represented as clockwise positive integers from 1-4 inclusive
 	public Tray(Tray previousTray, int moveBlockId, int direction)
 	{
@@ -154,6 +174,8 @@ public class Tray {
 		myPreviousTray = previousTray;
 		myBlockList = previousTray.myBlockList;
 		myBoardState = previousTray.move(moveBlockId,direction).myBoardState;
+		this.calibrateWeight();
+
 	}
 
 	public Tray(Tray previousTray)
@@ -162,23 +184,21 @@ public class Tray {
 		myPreviousTray = previousTray;
 
 		myBlockList = new Block[previousTray.myBlockList.length];
-		
+
 		for (int b = 0;b < previousTray.myBlockList.length;b++)
 		{
-			myBlockList[b] = new Block( previousTray.myBlockList[b].leftCol,
-										previousTray.myBlockList[b].topRow,
-										previousTray.myBlockList[b].rightCol,
-										previousTray.myBlockList[b].bottomRow
-									  );
-							
+			myBlockList[b] = new Block(previousTray.myBlockList[b]);
 		}
-		
+
 		myBoardState = new int[previousTray.myBoardState.length][];
 
 		for (int i = 0;i < previousTray.myBoardState.length;i++)
 		{
 			myBoardState[i] = previousTray.myBoardState[i].clone();
 		}
+		this.calibrateWeight();
+
+		
 	}
 
 	//only used for testing right now
@@ -187,6 +207,8 @@ public class Tray {
 			myBoardState = inBoardState;
 			myBlockList = inBlockList;
 			myPreviousTray = null;
+			this.calibrateWeight();
+
 		}
 
 	//assumes move is possible / legal
@@ -203,10 +225,10 @@ public class Tray {
 			2. Alter move function, calls reCalibrateTrayWieght on Tray
 			
 		*/
-		
+
 		switch(direction){
 			case 1: 
-					
+
 					for (int i = 0;i < myBlockList[moveBlockId].myLength;i++)
 					{
 						clone.myBoardState[clone.myBlockList[moveBlockId].leftCol+i]
@@ -218,7 +240,7 @@ public class Tray {
 
 					clone.myBlockList[moveBlockId].topRow = clone.myBlockList[moveBlockId].topRow-1;
 					clone.myBlockList[moveBlockId].bottomRow = clone.myBlockList[moveBlockId].bottomRow-1;
-					
+
 					clone.myBlockList[moveBlockId].calibrateWeight();
 					clone.calibrateWeight(moveBlockId);
 
@@ -236,14 +258,14 @@ public class Tray {
 
 					clone.myBlockList[moveBlockId].leftCol = clone.myBlockList[moveBlockId].leftCol+1;
 					clone.myBlockList[moveBlockId].rightCol = clone.myBlockList[moveBlockId].rightCol+1;
-					
+
 					clone.myBlockList[moveBlockId].calibrateWeight();
 					clone.calibrateWeight(moveBlockId);
-					
+
 					break;
 
 			case 3: 
-				
+
 					for (int i = 0;i < myBlockList[moveBlockId].myLength;i++)
 					{
 						clone.myBoardState[clone.myBlockList[moveBlockId].leftCol+i]
@@ -255,10 +277,10 @@ public class Tray {
 
 					clone.myBlockList[moveBlockId].topRow = clone.myBlockList[moveBlockId].topRow+1;
 					clone.myBlockList[moveBlockId].bottomRow = clone.myBlockList[moveBlockId].bottomRow+1;
-					
+
 					clone.myBlockList[moveBlockId].calibrateWeight();
 					clone.calibrateWeight(moveBlockId);
-					
+
 					break;
 
 			case 4: 
@@ -273,10 +295,10 @@ public class Tray {
 
 					clone.myBlockList[moveBlockId].leftCol = clone.myBlockList[moveBlockId].leftCol-1;
 					clone.myBlockList[moveBlockId].rightCol = clone.myBlockList[moveBlockId].rightCol-1;
-					
+
 					clone.myBlockList[moveBlockId].calibrateWeight();
 					clone.calibrateWeight(moveBlockId);
-					
+
 					break;
 		}
 
@@ -289,19 +311,34 @@ public class Tray {
 		//subtract old moved block weight, add new moved block weight
 		this.myWeight -= this.myPreviousTray.myBlockList[blockId].myWeight;
 		this.myWeight += this.myBlockList[blockId].myWeight;
+
+	}
 	
+	public void calibrateWeight() 
+	{
+		
+		for (Block b : this.myBlockList)
+		{
+			this.myWeight += b.myWeight;
+			//System.out.println("Calibrated to be : " +  this.myWeight);
+		}
+		
+
 	}
 
 	//given input ArrayList, adds all viable moves to the ArrayList as trays
-	public void getMoves(LinkedList<Tray> fringe)
+	public void getMoves(LinkedList<Tray> fringe, HashSet<Tray> prevStartTrays)
 	{
+		Tray newTray;
+		boolean isOld;
+		
 	for (int i = 0;i<myBlockList.length;i++){
 		for (int j=1;j<=4;j++)
 		{
 			Label1:
 			switch (j)
 			{
-			
+
 			case 1: //up
 				if (myBlockList[i].topRow-1<0)
 				{
@@ -314,8 +351,25 @@ public class Tray {
 						break Label1;
 					}
 				}
-				fringe.add(this.move(i, j));
+				
+				newTray = this.move(i, j);
+				isOld = false;
+				
+				for(Tray T : prevStartTrays)
+				{
+					if(newTray.equals(T))
+					{
+						isOld = true;
+					}
+				}
+				
+				if(!isOld)
+				{
+					fringe.add(newTray);
+				}
+				
 				break;
+				
 			case 2: //right
 				if (myBlockList[i].rightCol+1>=myBoardState.length)
 				{
@@ -328,7 +382,23 @@ public class Tray {
 						break Label1;
 					}
 				}
-				fringe.add(this.move(i, j));
+				
+				newTray = this.move(i, j);
+				isOld = false;
+				
+				for(Tray T : prevStartTrays)
+				{
+					if(newTray.equals(T))
+					{
+						isOld = true;
+					}
+				}
+				
+				if(!isOld)
+				{
+					fringe.add(newTray);
+				}
+				
 				break;
 			case 3: //down
 				if (myBlockList[i].bottomRow+1>=myBoardState[0].length)
@@ -342,7 +412,23 @@ public class Tray {
 						break Label1;
 					}
 				}
-				fringe.add(this.move(i, j));
+				
+				newTray = this.move(i, j);
+				isOld = false;
+				
+				for(Tray T : prevStartTrays)
+				{
+					if(newTray.equals(T))
+					{
+						isOld = true;
+					}
+				}
+				
+				if(!isOld)
+				{
+					fringe.add(newTray);
+				}
+				
 				break;
 			case 4: //right
 				if (myBlockList[i].leftCol-1<0)
@@ -356,7 +442,23 @@ public class Tray {
 						break Label1;
 					}
 				}
-				fringe.add(this.move(i, j));
+				
+				newTray = this.move(i, j);
+				isOld = false;
+				
+				for(Tray T : prevStartTrays)
+				{
+					if(newTray.equals(T))
+					{
+						isOld = true;
+					}
+				}
+				
+				if(!isOld)
+				{
+					fringe.add(newTray);
+				}
+				
 				break;
 			}
 			}
@@ -378,7 +480,7 @@ public class Tray {
 			{
 				int thisBlockID = this.myBoardState[row][col];
 				int nextBlockID = next.myBoardState[row][col];
-				
+
 				if(nextBlockID==-1&&!prevPosFound&&thisBlockID!=-1)
 				{
 					prevPos = this.myBlockList[thisBlockID].leftCol + " " + this.myBlockList[thisBlockID].topRow;
@@ -395,7 +497,7 @@ public class Tray {
 
 		return prevPos + " " + nextPos;
 	}
-	
+
 	public boolean equals(Tray other)
 	{
 		for(Block block : this.myBlockList)
@@ -411,43 +513,12 @@ public class Tray {
 		}
 		return true;
 	}
-	
-	
-	
-	// fixing
-	/*
-	public void addWeight(Tray t) {
-		int myProximity;
-		int mySize;
-		Block[] alreadySeen = findDuplicates(t);
-		for (Block b: t.myBlockList) {
-			for (int i = 0; i < alreadySeen.length; i++) {
-				if (b != alreadySeen[i]) {
-					b.myProximity = b.findProximity(t);
-					b.myWeight = b.myProximity * b.mySize;
-				} else {
-					b.myWeight = b.myWeight - 1;
-				}
-			}
-		}
 
-		// overload this
-	}
+
+
+	// fixing
+
 	
-	public Block[] findDuplicates(Tray t) {
-		Block[] alreadySeen = new Block[myBlockList.length];
-		for (int i = 0; i < t.myBlockList.length; i++) {
-			Block a = this.myBlockList[i];
-			for (int j = i - 1; j < myBlockList.length; j++) {
-				Block b = this.myBlockList[j];
-				if (b.equals(a)) {
-					b = alreadySeen[i];
-				}
-			}
-		}
-		return alreadySeen;
-	}
-	*/
 		public boolean isOK(){
 		boolean annie = false;
 		boolean[][] visited = new boolean[this.myBoardState.length][this.myBoardState[0].length];
@@ -500,7 +571,7 @@ public class Tray {
 				return annie;
 			}
 		}
-		
+
 		//check that IDs on board state match (this also checks for overlapping blocks) (done)
 		//check there are no block ID's where they shouldn't be (done)
 		//check that previousTray's size is same (done)
