@@ -7,7 +7,7 @@ public class Solver
 	//knows initial tray configuration 
 	//and final tray configuration
 	
-	public String isDebugging;
+	public static String isDebugging="";
 	private Tray initialTray;
 	private Tray finalTray;
 	
@@ -90,11 +90,12 @@ public class Solver
 		initialTray=new Tray(input1.toArray(goodexample),size,finalTray.myBlockList);
 		
 		//Debugging Complex
-		if(isDebugging.equals("debug")||isDebugging.equals("solver")){
-			System.out.println(initialTray.isOK());
+		if(Solver.debug().equals("debug")||Solver.debug().equals("solver")||Solver.debug().equals("tray")){
+			System.out.println("***Solver Initialized");
+			//System.out.println(initialTray.isOK());
 			initialTray.print();
-			System.out.println(finalTray.isOK());
-			finalTray.print();	
+			//System.out.println(finalTray.isOK());
+			finalTray.print();
 		}
 	}
 	
@@ -102,20 +103,32 @@ public class Solver
 	//takes in InputSource and returns debugging array
 	{
 		if (!debugString.substring(0, 2).equals("-o")){
-			return null;
+			return "";
 		}
 		String args=debugString.substring(2);
-		switch (args){
-		case "options": //add in descriptions for debug options here
+		if (args.equals("options"))
+		{
 			System.out.println("options: prints all possible args");
-			break;
-		case "debug":
-		case "solver":
-		case "solution":
-		case "pathfind":
-		case "tray": return args;
-		default: return null;
+			System.out.println("debug: prints all print blocks");
+			System.out.println("solver: prints all print blocks related to the Solver class");
+			System.out.println("solution: prints all print blocks relating to tray computing");
+			System.out.println("pathfind: prints all print blocks related to finding the path");
+			System.out.println("tray: prints tray by tray during solution computation");
+			return "";
+		}else if (args.equals("debug")||
+				args.equals("solver")||
+				args.equals("solution")||
+				args.equals("pathfind")||
+				args.equals("tray"))
+		{
+			return args;
+		}else{
+			return "";
 		}
-		return null;
+	}
+	
+	//isDebugging accessor
+	public static String debug(){
+		return Solver.isDebugging;
 	}
 }
