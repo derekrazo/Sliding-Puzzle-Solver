@@ -72,10 +72,13 @@ public class PathFinder {
 		while(true)
 		{
 			//Debugging
-			System.out.println("Running");
-			System.out.println(startTrays.size());
-			System.out.println(endTrays.size());
-
+			if(Solver.debug().equals("debug")||
+				Solver.debug().equals("solution")){
+				
+				System.out.println("***Running");
+				System.out.println("start size: "+startTrays.size());
+				System.out.println("end size: "+endTrays.size());
+			}
 			//Inefficient as FUCK!
 			//iterates through all of startTray and endTray, looking for a match
 			//if a match is found, return path
@@ -85,7 +88,11 @@ public class PathFinder {
 				{
 					if(startTray.equals(endTray))
 					{
-						System.out.print("Found");
+						if (Solver.debug().equals("debug")||
+								Solver.debug().equals("solution"))
+						{
+						System.out.println("Found");
+						}
 						return findPath(startTray,endTray);
 					}
 				}
@@ -118,6 +125,9 @@ public class PathFinder {
 				*/
 
 				//getMoves Returns iterator
+				if (Solver.debug().equals("debug")||Solver.debug().equals("tray")){
+					startTrays.peek().print();
+				}
 				startTrays.pop().getMoves(startFringe, prevStartTrays);
 			}
 			//add all possible moves to end fringe (going backwards)
@@ -144,6 +154,9 @@ public class PathFinder {
 				*/
 
 				//getMoves Returns collection
+				if (Solver.debug().equals("debug")||Solver.debug().equals("tray")){
+					endTrays.peek().print();
+				}
 				endTrays.pop().getMoves(endFringe, prevEndTrays);
 			}
 
@@ -168,19 +181,26 @@ public class PathFinder {
 			//while(count < 10)
 			//{
 		
-				//Debugging
-				/*
-				System.out.println("Running");
-				System.out.println(startTrays.size());
-				System.out.println(endTrays.size());
-				*/
+				if(Solver.debug().equals("debug")||
+					Solver.debug().equals("solution")||
+					Solver.debug().equals("tray")){
+					
+					System.out.println("***Running");
+					System.out.println("start size: "+startTrays.size());
+					System.out.println("end size: "+endTrays.size());
+				}
 	
 			
 				for(Tray startTray : prevStartTrays)
 				{
 					if(endTrays.peek().equals(startTray))
 					{
+						if (Solver.debug().equals("debug")||
+								Solver.debug().equals("solution")||
+								Solver.debug().equals("tray"))
+						{
 						System.out.println("Found");
+						}
 						return findPath(startTray,endTrays.peek());
 					}
 				}
@@ -189,7 +209,10 @@ public class PathFinder {
 				
 	
 				LinkedList<Tray> possibleMoves = new LinkedList<Tray>();
-				
+				if (Solver.debug().equals("debug")||
+						Solver.debug().equals("tray")){
+					weightQueue.peek().print();
+				}
 				weightQueue.poll().getMoves(possibleMoves, prevStartTrays);
 				
 				weightQueue.addAll(possibleMoves);
@@ -233,11 +256,13 @@ public class PathFinder {
 			    	//gc();
 			    }
 				*/
-				
+			if (Solver.debug().equals("debug")||
+						Solver.debug().equals("solution")||
+						Solver.debug().equals("tray")){
+					System.out.println("***Stats");
 			    System.out.println("Cycles :" + count); 
-			    System.out.println("weightQueue size :" + weightQueue.size()); 
-				count ++;
-
+			    System.out.println("weightQueue size :" + weightQueue.size());
+			}
 				
 			}
 			
@@ -327,6 +352,14 @@ public class PathFinder {
 		// creates string array with cell for each tray in the path
 		// store string returned by Tray.movemade of each move made
 		String[] rtnPath = new String[path.size()];
+		if (Solver.debug().equals("debug")||
+				Solver.debug().equals("pathfind)")){
+			for (Tray t:path){
+				System.out.println("***Tray Path");
+				t.print();
+				System.out.println("***");
+			}
+		}
 
 		for (int i = 0; i < path.size()-1; i++) {
 			rtnPath[i] = path.get(i).moveMade(path.get(i + 1));
@@ -345,6 +378,14 @@ public class PathFinder {
 			System.out.println();
 			*/
 
+		}
+		if (Solver.debug().equals("debug")||
+				Solver.debug().equals("pathfind")){
+			System.out.println("***String Path");
+			for (String i:rtnPath){
+				System.out.println(i);
+			}
+			System.out.println("***");
 		}
 
 		return rtnPath;
