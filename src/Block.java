@@ -84,7 +84,6 @@ public class Block {
 			}
 			
 		} 
-		System.out.println(leastDistance);
 		return Math.abs(leastDistance);
 	}
 	
