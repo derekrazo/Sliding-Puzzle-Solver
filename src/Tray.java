@@ -31,6 +31,7 @@ public class Tray {
 	public Tray myPreviousTray;
 	public Block[] myBlockList;
 	public double myWeight;
+	public Tray myNextTray;
 
 	public Tray(String[] config, String size) {
 		//takes in a String Array 
@@ -59,6 +60,7 @@ public class Tray {
 		}
 		this.similarStartBlockHelper();
 		this.calibrateWeight();
+		myNextTray = null;
 	}
 	
 	public Tray(double weight)
@@ -97,6 +99,7 @@ public class Tray {
 			myWeight+=myBlockList[i].myWeight;
 		}
 		this.calibrateWeight();
+		myNextTray = null;
 	}
 
 	private void similarStartBlockHelper(){
@@ -175,6 +178,7 @@ public class Tray {
 		myBlockList = previousTray.myBlockList;
 		myBoardState = previousTray.move(moveBlockId,direction).myBoardState;
 		this.calibrateWeight();
+		myNextTray = null;
 
 	}
 
@@ -197,6 +201,7 @@ public class Tray {
 			myBoardState[i] = previousTray.myBoardState[i].clone();
 		}
 		this.calibrateWeight();
+		myNextTray = null;
 
 		
 	}
@@ -209,6 +214,7 @@ public class Tray {
 			myPreviousTray = null;
 			this.calibrateWeight();
 
+			myNextTray = null;
 		}
 
 	//assumes move is possible / legal
@@ -529,7 +535,7 @@ public class Tray {
 			int y2 = this.myBlockList[i].bottomRow;
 			for (int j=x1;j<=x2;j++)
 			{
-				for (int k=y1;k<=y2;k++)
+				for (int k=y1;k<=y2;j++)
 				{
 					if (this.myBoardState[j][k]!=i || visited[j][k]==true){
 						return annie;
