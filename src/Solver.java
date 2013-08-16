@@ -58,7 +58,7 @@ public class Solver
 		{
 			initialString=new InputSource(args[0]);
 			finalString=new InputSource(args[1]);
-			isDebugging = null;
+			isDebugging = null"";
 		}else
 		{
 			initialString=new InputSource(args[1]);
