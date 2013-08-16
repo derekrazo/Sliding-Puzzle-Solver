@@ -543,14 +543,15 @@ public class Tray {
 					visited[j][k]=true;
 				}
 			}
-			for (int x=0;x<visited.length;x++){
+			
+		}
+		for (int x=0;x<visited.length;x++){
 				for (int y=0;y<visited[0].length;y++){
 					if(visited[x][y]==false && this.myBoardState[x][y]!=-1){
 						return annie;
 					}
 				}
 			}
-		}
 		if (this.myPreviousTray!=null)
 		{
 			if (this.myPreviousTray.myBlockList.length!=this.myBlockList.length ||
