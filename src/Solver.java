@@ -111,21 +111,26 @@ public class Solver
 			System.out.println("options: prints all possible args");
 			System.out.println("debug: prints all print blocks");
 			System.out.println("solver: prints all print blocks related to the Solver class");
-			System.out.println("solution: prints all print blocks relating to tray computing");
-			System.out.println("pathfind: prints all print blocks related to finding the path");
-			System.out.println("tray: prints tray by tray during solution computation");
+			System.out.println("solution: prints all print blocks relating to the solution method in Pathfinder");
+			System.out.println("printpath: prints all print blocks related to the findpath method in Pathfinder");
+			System.out.println("stepbystep: prints tray by tray during solution computation");
+			System.out.println("tray: prints print blocks inside the tray class");
+			System.out.println("block: prints print blocks inside the block class");
 			return "";
 		}else if (args.equals("debug")||
 				args.equals("solver")||
 				args.equals("solution")||
-				args.equals("pathfind")||
-				args.equals("tray"))
+				args.equals("printpath")||
+				args.equals("stepbystep")||
+				args.equals("tray")||
+				args.equals("block"))
 		{
 			return args;
 		}else{
 			return "";
 		}
 	}
+	
 	
 	//isDebugging accessor
 	public static String debug(){
