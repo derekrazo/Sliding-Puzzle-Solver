@@ -553,7 +553,7 @@ public class Tray {
 		}
 		if (this.myPreviousTray!=null)
 		{
-			if (this.myPreviousTray.myBlockList.length!=this.myPreviousTray.myBlockList.length ||
+			if (this.myPreviousTray.myBlockList.length!=this.myBlockList.length ||
 					this.myPreviousTray.myBoardState.length!=this.myBoardState.length ||
 					this.myPreviousTray.myBoardState[0].length!=this.myBoardState[0].length)
 			{
