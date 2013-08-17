@@ -13,12 +13,7 @@ import java.util.Arrays;
  * 1. Position of blocks
  * 2. position of spaces
  * 3. Weight which represents its closeness to another tray
- * 
- * Does:
- * 
- * 
- * 
- * 
+ *
  * */
 
 
@@ -326,7 +321,6 @@ public class Tray {
 		for (Block b : this.myBlockList)
 		{
 			this.myWeight += b.myWeight;
-			//System.out.println("Calibrated to be : " +  this.myWeight);
 		}
 		
 
@@ -525,7 +519,7 @@ public class Tray {
 	// fixing
 
 	
-		public boolean isOK(){
+		public boolean isOK() throws IllegalStateException{
 		boolean annie = false;
 		boolean[][] visited = new boolean[this.myBoardState.length][this.myBoardState[0].length];
 		for (int i=0;i<this.myBlockList.length;i++){
@@ -538,7 +532,7 @@ public class Tray {
 				for (int k=y1;k<=y2;k++)
 				{
 					if (this.myBoardState[j][k]!=i || visited[j][k]==true){
-						return annie;
+						throw new IllegalStateException("***Information in BlockState doesn't match BlockList");
 					}
 					visited[j][k]=true;
 				}
@@ -548,7 +542,7 @@ public class Tray {
 		for (int x=0;x<visited.length;x++){
 				for (int y=0;y<visited[0].length;y++){
 					if(visited[x][y]==false && this.myBoardState[x][y]!=-1){
-						return annie;
+						throw new IllegalStateException("***Block in BlockState isn't included in BlockList");
 					}
 				}
 			}
@@ -558,7 +552,7 @@ public class Tray {
 					this.myPreviousTray.myBoardState.length!=this.myBoardState.length ||
 					this.myPreviousTray.myBoardState[0].length!=this.myBoardState[0].length)
 			{
-				return annie;
+				throw new IllegalStateException("***Dimensions of previous Tray do not match current Tray");
 			}
 			int countdiff=0;
 			for(int l =0; l<this.myBlockList.length;l++){
@@ -570,19 +564,19 @@ public class Tray {
 					{
 						countdiff++;
 					}else{
-						return annie;
+						throw new IllegalStateException("***Block can only move along one dimension");
 					}
 				}
 			}
 			if (countdiff!= 1||countdiff!=0){
-				return annie;
+				throw new IllegalStateException("***Only one Block can be moved between Trays");
 			}
 		}
 
 		//check that IDs on board state match (this also checks for overlapping blocks) (done)
 		//check there are no block ID's where they shouldn't be (done)
 		//check that previousTray's size is same (done)
-		//check that all blocks but one match 
+		//check that all blocks but one match (done)
 		annie =true;
 		return annie;
 	}
