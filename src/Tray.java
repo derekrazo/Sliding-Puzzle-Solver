@@ -535,7 +535,7 @@ public class Tray {
 			int y2 = this.myBlockList[i].bottomRow;
 			for (int j=x1;j<=x2;j++)
 			{
-				for (int k=y1;k<=y2;j++)
+				for (int k=y1;k<=y2;k++)
 				{
 					if (this.myBoardState[j][k]!=i || visited[j][k]==true){
 						return annie;
