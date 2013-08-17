@@ -78,56 +78,9 @@ public class PathFinder {
 	    }
 	}
 
+	
+
 	public String [] solution() throws NoAnswerException
-	{
-		
-		while(true)
-		{
-			
-			//Debugging
-			//System.out.println("Running");
-			//System.out.println(startTrays.size());
-			//System.out.println(endTrays.size());
-
-			//Inefficient as FUCK!
-			//iterates through all of startTray and endTray, looking for a match
-			//if a match is found, return path
-			for(Tray startTray : prevStartTrays)
-			{
-				for(Tray endTray : prevEndTrays)
-				{
-					if(startTray.equals(endTray))
-					{
-						//System.out.print("Found");
-						return findPath(startTray,endTray);
-					}
-				}
-			}
-
-			//initialize new fringes
-			LinkedList<Tray> startFringe = new LinkedList<Tray>();
-			LinkedList<Tray> endFringe = new LinkedList<Tray>();
-			
-			//add all possible moves to startfringe
-			while(startTrays.size()!=0)
-			{
-				prevStartTrays.add(startTrays.peek());
-				startTrays.pop().getMoves(startFringe, prevStartTrays);
-			}
-			//add all possible moves to end fringe (going backwards)
-			while(endTrays.size()!=0)
-			{
-				prevEndTrays.add(endTrays.peek());
-				endTrays.pop().getMoves(endFringe, prevEndTrays);
-			}
-			
-			//Initialize new frindge
-			startTrays = startFringe;
-			endTrays = endFringe;
-		}
-	}
-
-	public String [] solution2() throws NoAnswerException
 	{
 		int count = 0;
 		
@@ -139,18 +92,23 @@ public class PathFinder {
 			//{
 		
 				//Debugging
-				/*
-				System.out.println("Running");
-				System.out.println(startTrays.size());
-				System.out.println(endTrays.size());
-				*/
+				if(Solver.debug().equals("debug")||
+						Solver.debug().equals("solution")||
+								Solver.debug().equals("stepbystep")){
+				System.out.println("***Running");
+				}
+				
 	
 			
 				for(Tray startTray : prevStartTrays)
 				{
 					if(endTrays.peek().equals(startTray))
 					{
-						//System.out.println("Found");
+						if(Solver.debug().equals("debug")||
+								Solver.debug().equals("solution")||
+										Solver.debug().equals("stepbystep")){
+						System.out.println("Found");
+						}
 						return findPath(startTray,endTrays.peek());
 					}
 				}
@@ -159,19 +117,21 @@ public class PathFinder {
 				
 	
 				LinkedList<Tray> possibleMoves = new LinkedList<Tray>();
-				
+				if(Solver.debug().equals("debug")||
+								Solver.debug().equals("stepbystep")){
+					weightQueue.peek().getMoves(possibleMoves,prevStartTrays);
+				}
 				weightQueue.poll().getMoves(possibleMoves, prevStartTrays);
 				
 				weightQueue.addAll(possibleMoves);
 				prevStartTrays.addAll(possibleMoves);
-				
-				//System.out.println(" leftCol: " + weightQueue.peek().myBlockList[0].leftCol + " topRow: " + weightQueue.peek().myBlockList[0].topRow);
-			
-			    /* Total memory currently in use by the JVM */
-				/*
+				if(Solver.debug().equals("debug")||
+						Solver.debug().equals("solution")||
+								Solver.debug().equals("stepbystep")){
 			    System.out.println("Free Heap memory (bytes): " + 
 			    		(ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getMax() - 
 			    		 ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed()));
+				}
 				/*
 			    if ((ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getMax() - 
 			    	 ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed()) < 1000000)
@@ -203,9 +163,12 @@ public class PathFinder {
 			    	//gc();
 			    }
 				*/
-				
-			    //System.out.println("Cycles :" + count); 
-			    //System.out.println("weightQueue size :" + weightQueue.size()); 
+				if(Solver.debug().equals("debug")||
+						Solver.debug().equals("solution")||
+								Solver.debug().equals("stepbystep")){
+			    System.out.println("Cycles :" + count); 
+			    System.out.println("weightQueue size :" + weightQueue.size()); 
+				}
 				count ++;
 
 			}
@@ -224,7 +187,11 @@ public class PathFinder {
 			
 			while (true)
 			{
-				//System.out.println("time: =====.>>>>>>>==<<<<<<<<<=====" + timer.elapsed());
+				if(Solver.debug().equals("debug")||
+						Solver.debug().equals("solution")||
+								Solver.debug().equals("stepbystep")){
+				System.out.println("time:" + timer.elapsed());
+				}
 				
 				largestRandTrayWeight = new Tray(origin);
 				
@@ -243,16 +210,22 @@ public class PathFinder {
 						
 						prevStartTrays.addAll(fringe);
 						
-						//System.out.println("Size is: "+ (fringe.size()));
-	
+						if(Solver.debug().equals("debug")||
+								Solver.debug().equals("solution")||
+										Solver.debug().equals("stepbystep")){
+						System.out.println("Fringe Size is: "+ (fringe.size()));
+						}
+						
 						if(fringe.size()==0)
 						{
-							//System.out.println("WAT");
+							if(Solver.debug().equals("debug")||
+									Solver.debug().equals("solution")||
+											Solver.debug().equals("stepbystep")){
+							System.out.println("***Fringe is Empty");
+							}
 							break;
 						}
 						
-						//System.out.println("Random: "+ randMove.nextInt(fringe.size()));
-	
 						curTray = fringe.get(randMove.nextInt(fringe.size()));
 						
 						
@@ -260,7 +233,11 @@ public class PathFinder {
 						{
 							if(destination.equals(prevTray))
 							{
-								//System.out.println("Found");
+								if(Solver.debug().equals("debug")||
+										Solver.debug().equals("solution")||
+												Solver.debug().equals("stepbystep")){
+								System.out.println("***Found");
+								}
 								printPath(prevTray);
 								String [] rtn = new String[0];
 								return null;
@@ -289,48 +266,16 @@ public class PathFinder {
 				//}
 				//else
 				//{
-				
-				//System.out.println(closestWeight);
+				if(Solver.debug().equals("debug")||
+						Solver.debug().equals("solution")||
+								Solver.debug().equals("stepbystep")){
+				System.out.println(closestWeight);
+				}
 				
 				weightQueue.add(largestRandTrayWeight);
 				curTray = new Tray(weightQueue.poll());
 			}
 		}
-			
-			/*
-	
-				for(Tray startTray : prevStartTrays)
-				{
-					if(endTrays.peek().equals(startTray))
-					{
-						System.out.println("Found");
-						return findPath(startTray,endTrays.peek());
-					}
-				}
-	
-				LinkedList<Tray> possibleMoves = new LinkedList<Tray>();
-
-				Tray combo = weightQueue.peek();
-				
-				for (int i = 0;i < 20;i++)
-				{
-					combo.getMoves(possibleMoves, prevStartTrays);
-					//System.out.println("possible moves size :" + possibleMoves.size());
-					if (possibleMoves.size() != 0){
-						combo = possibleMoves.get(0);
-						weightQueue.addAll(possibleMoves);
-						prevStartTrays.addAll(possibleMoves);
-					}
-				}
-				
-				
-				//System.out.println(" leftCol: " + weightQueue.peek().myBlockList[0].leftCol + " topRow: " + weightQueue.peek().myBlockList[0].topRow);
-		
-				count = 0;
-			
-			
-		}
-		*/
 	}
 	
 	/**
@@ -356,7 +301,10 @@ public class PathFinder {
 			curTray.myPreviousTray.myNextTray = curTray;
 			curTray = curTray.myPreviousTray;
 		}
-		
+		if(Solver.debug().equals("debug")||
+				Solver.debug().equals("printpath")){
+			System.out.println("***First Traversal Success");
+		}
 		while(curTray.myNextTray!=null)
 		{
 			if(!curTray.equals(curTray.myNextTray))
@@ -369,34 +317,6 @@ public class PathFinder {
 	   
 	public String[] findPath(Tray toStart, Tray toFinish) {
 
-		//For Debugging
-		/*
-		int [][] boardStart = toStart.myBoardState;
-		for(int[] arraySrt : boardStart)
-		{
-			for(int intergerSrt : arraySrt)
-			{
-				System.out.print(intergerSrt);
-			}
-			System.out.println();
-		}
-		System.out.println();
-		
-
-		int [][] boardEnd = toFinish.myBoardState;
-		for(int[] arrayEnd : boardEnd)
-		{
-			for(int intergerEnd : arrayEnd)
-			{
-				System.out.print(intergerEnd);
-			}
-			System.out.println();
-		}
-		System.out.println();
-		
-		System.out.println(toStart.equals(toFinish));
-		*/
-
 		path.add(toStart);
 		findPathBack(toStart);
 		findPathForward(toFinish);
@@ -407,8 +327,9 @@ public class PathFinder {
 		for (int i = 0; i < path.size()-1; i++) {
 			rtnPath[i] = path.get(i).moveMade(path.get(i + 1));
 
-			//For Debugging
-			/*
+			if(Solver.debug().equals("debug")||
+					Solver.debug().equals("printpath")){
+			System.out.println("***Tray");
 			int [][] board = path.get(i).myBoardState;
 			for(int[] array : board)
 			{
@@ -419,7 +340,7 @@ public class PathFinder {
 				System.out.println();
 			}
 			System.out.println();
-			*/
+			}
 
 		}
 
