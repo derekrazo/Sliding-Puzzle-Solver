@@ -72,19 +72,21 @@ public class Block {
 	}
 	
 	public double distanceFromClosestEndBlock() {
-		double leastDistance = 1000000;
+		double leastDistance = 100000000;
 		
 		for (Block b: this.similarEndBlocks) 
 		{
-			double cur = Math.sqrt(((this.leftCol-b.leftCol)*(this.leftCol-b.leftCol)) + 
-					 			   ((this.topRow-b.topRow)*(this.topRow-b.topRow)));
+			double cur = Math.sqrt((Math.abs((this.leftCol-b.leftCol)*(this.leftCol-b.leftCol)) + 
+					Math.abs(((this.topRow-b.topRow)*(this.topRow-b.topRow)))));
 			if (cur < leastDistance)
 			{
 				leastDistance = cur;
 			}
 			
-		} 
-		return Math.abs(leastDistance);
+		}
+		
+		//System.out.println("Least Distance : " + leastDistance);
+		return leastDistance;
 	}
 	
 	public void calibrateWeight() {
@@ -105,10 +107,38 @@ public class Block {
 		 * 8.
 		 * 
 		 * */
-		
-		myWeight = ((similarEndBlocks.length + ((this.myHeight*this.myLength) / 
-				  			this.distanceFromClosestEndBlock()+1))
-				  	/ similarStartBlocks);
+		if (similarEndBlocks != null && similarEndBlocks.length != 0 ){
+			
+			//System.out.println("got here");
+			
+			/*
+			myWeight = ((similarEndBlocks.length + ((this.myHeight*this.myLength) / 
+				  							     (this.distanceFromClosestEndBlock()+1)))
+				  	 / similarStartBlocks); 
+			*/
+			
+			//Random r = new Random(10);
+			
+			myWeight = ((similarEndBlocks.length + ((this.myHeight*this.myLength) / 
+				  							     ((this.distanceFromClosestEndBlock()+1))))
+				  	 / (similarStartBlocks+1)); 
+			
+			
+			//myWeight = ((similarEndBlocks.length + ((this.myHeight*this.myLength) / (this.distanceFromClosestEndBlock()+1)))/ similarStartBlocks);
+			/*
+			System.out.println("Sim block len: " + similarEndBlocks.length);
+			System.out.println("height times weight: " + (this.myHeight*this.myLength));
+			System.out.println("distance from closest end + 1: " + this.distanceFromClosestEndBlock()+1);
+			System.out.println("size divided by distance: " + ((this.myHeight*this.myLength) / (this.distanceFromClosestEndBlock()+1)));
+			System.out.println("# simmiliar start blocks: " + similarStartBlocks);
+			
+			//myWeight = 1.0/(this.distanceFromClosestEndBlock()+1);
+			System.out.println("Block calibrated at : " + myWeight);
+			*/
+		}
+		else{
+			myWeight = 0;
+		}
 	}
 
 }
