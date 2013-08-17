@@ -83,7 +83,7 @@ public class PathFinder {
 		while(true){
 			timer.start();
 
-			while (timer.elapsed() < 20000){
+			while (timer.elapsed() < 30000){
 			
 		
 				//Debugging
