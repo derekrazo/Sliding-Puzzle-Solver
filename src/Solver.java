@@ -92,9 +92,14 @@ public class Solver
 		//Debugging Complex
 		if(Solver.debug().equals("debug")||Solver.debug().equals("solver")||Solver.debug().equals("tray")){
 			System.out.println("***Solver Initialized");
+			try{
 			System.out.println(initialTray.isOK());
 			initialTray.print();
 			System.out.println(finalTray.isOK());
+			}catch(IllegalStateException e){
+				System.out.println(e);
+				System.exit(1);
+			}
 			finalTray.print();
 		}
 	}
