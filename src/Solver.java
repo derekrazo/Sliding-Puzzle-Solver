@@ -92,9 +92,9 @@ public class Solver
 		//Debugging Complex
 		if(Solver.debug().equals("debug")||Solver.debug().equals("solver")||Solver.debug().equals("tray")){
 			System.out.println("***Solver Initialized");
-			//System.out.println(initialTray.isOK());
+			System.out.println(initialTray.isOK());
 			initialTray.print();
-			//System.out.println(finalTray.isOK());
+			System.out.println(finalTray.isOK());
 			finalTray.print();
 		}
 	}
@@ -114,16 +114,12 @@ public class Solver
 			System.out.println("solution: prints all print blocks relating to the solution method in Pathfinder");
 			System.out.println("printpath: prints all print blocks related to the findpath method in Pathfinder");
 			System.out.println("stepbystep: prints tray by tray during solution computation");
-			System.out.println("tray: prints print blocks inside the tray class");
-			System.out.println("block: prints print blocks inside the block class");
 			return "";
 		}else if (args.equals("debug")||
 				args.equals("solver")||
 				args.equals("solution")||
 				args.equals("printpath")||
-				args.equals("stepbystep")||
-				args.equals("tray")||
-				args.equals("block"))
+				args.equals("stepbystep"))
 		{
 			return args;
 		}else{
