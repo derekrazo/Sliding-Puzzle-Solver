@@ -2,7 +2,6 @@ import java.lang.management.ManagementFactory;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Comparator;
 import java.util.PriorityQueue;
@@ -32,9 +31,6 @@ public class PathFinder {
 	Comparator<Tray> comparator;
 	PriorityQueue<Tray> weightQueue;
 	Timer timer = new Timer();
-	
-	//TwoSided
-	//startQueue;
 
 	public PathFinder(Tray startTray, Tray endTray)
 	{
@@ -88,13 +84,12 @@ public class PathFinder {
 			timer.start();
 
 			while (timer.elapsed() < 20000){
-			//while(count < 10)
-			//{
+			
 		
 				//Debugging
 				if(Solver.debug().equals("debug")||
-						Solver.debug().equals("solution")||
-								Solver.debug().equals("stepbystep")){
+					Solver.debug().equals("solution")||
+					Solver.debug().equals("stepbystep")){
 				System.out.println("***Running");
 				}
 				
@@ -104,11 +99,13 @@ public class PathFinder {
 				{
 					if(endTrays.peek().equals(startTray))
 					{
+						//Debugging
 						if(Solver.debug().equals("debug")||
-								Solver.debug().equals("solution")||
-										Solver.debug().equals("stepbystep")){
+							Solver.debug().equals("solution")||
+							Solver.debug().equals("stepbystep")){
 						System.out.println("Found");
 						}
+						
 						return findPath(startTray,endTrays.peek());
 					}
 				}
@@ -117,57 +114,33 @@ public class PathFinder {
 				
 	
 				LinkedList<Tray> possibleMoves = new LinkedList<Tray>();
-				if(Solver.debug().equals("debug")||
-								Solver.debug().equals("stepbystep")){
-					weightQueue.peek().getMoves(possibleMoves,prevStartTrays);
-				}
-				weightQueue.poll().getMoves(possibleMoves, prevStartTrays);
 				
+				//Debugging
+				if(Solver.debug().equals("debug")||
+					Solver.debug().equals("stepbystep")){
+					try{
+					weightQueue.peek().isOK();
+					}catch (IllegalStateException e){
+						System.out.println(e);
+						System.exit(1);
+					}
+					weightQueue.peek().print();
+				}
+				
+				weightQueue.poll().getMoves(possibleMoves, prevStartTrays);
 				weightQueue.addAll(possibleMoves);
 				prevStartTrays.addAll(possibleMoves);
+				
+				//debugging
 				if(Solver.debug().equals("debug")||
-						Solver.debug().equals("solution")||
-								Solver.debug().equals("stepbystep")){
-			    System.out.println("Free Heap memory (bytes): " + 
+					Solver.debug().equals("solution")||
+					Solver.debug().equals("stepbystep")){
+					
+					System.out.println("Free Heap memory (bytes): " + 
 			    		(ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getMax() - 
 			    		 ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed()));
-				}
-				/*
-			    if ((ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getMax() - 
-			    	 ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed()) < 1000000)
-			    {
-			    	//prevStartTrays.clear();
-					double ave = 0; 
-					
-				    System.out.println("CLEANING:"); 
-
-			    	for(Tray t : weightQueue)
-			    	{
-						//ave += t.myWeight; 
-					    //System.out.println("t. weight : " + t.myWeight); 
-			    	}
-			    	
-			    	//ave = ave / weightQueue.size();
-			    	
-				    //System.out.println("AVE:" + ave); 
-
-			    	for(Tray t : weightQueue)
-			    	{
-						if (t.myWeight < ave)
-						{
-							weightQueue.remove(t);
-						} 
-			    	}
-			    	
-			    	
-			    	//gc();
-			    }
-				*/
-				if(Solver.debug().equals("debug")||
-						Solver.debug().equals("solution")||
-								Solver.debug().equals("stepbystep")){
-			    System.out.println("Cycles :" + count); 
-			    System.out.println("weightQueue size :" + weightQueue.size()); 
+					System.out.println("Cycles :" + count); 
+					System.out.println("weightQueue size :" + weightQueue.size()); 
 				}
 				count ++;
 
@@ -181,16 +154,13 @@ public class PathFinder {
 			
 			Tray largestRandTrayWeight;
 			
-			//prevStartTrays.clear();
-
-			//timer.reset();
-			
 			while (true)
 			{
 				if(Solver.debug().equals("debug")||
-						Solver.debug().equals("solution")||
-								Solver.debug().equals("stepbystep")){
-				System.out.println("time:" + timer.elapsed());
+					Solver.debug().equals("solution")||
+					Solver.debug().equals("stepbystep")){
+				
+					System.out.println("time:" + timer.elapsed());
 				}
 				
 				largestRandTrayWeight = new Tray(origin);
@@ -200,29 +170,29 @@ public class PathFinder {
 					timer.start();
 					prevStartTrays.clear();
 					fringe.clear();
-					//System.out.println("time:" + timer.elapsed());
 					
 					while (timer.elapsed() < 100)
 					{
-						//System.out.println("time:" + timer.elapsed());
 						fringe.clear();
 						curTray.getMoves(fringe, prevStartTrays);
 						
 						prevStartTrays.addAll(fringe);
 						
 						if(Solver.debug().equals("debug")||
-								Solver.debug().equals("solution")||
-										Solver.debug().equals("stepbystep")){
+							Solver.debug().equals("solution")||
+							Solver.debug().equals("stepbystep")){
 						System.out.println("Fringe Size is: "+ (fringe.size()));
 						}
 						
 						if(fringe.size()==0)
 						{
+							//Debugging
 							if(Solver.debug().equals("debug")||
-									Solver.debug().equals("solution")||
-											Solver.debug().equals("stepbystep")){
+								Solver.debug().equals("solution")||
+								Solver.debug().equals("stepbystep")){
 							System.out.println("***Fringe is Empty");
 							}
+							
 							break;
 						}
 						
@@ -233,11 +203,13 @@ public class PathFinder {
 						{
 							if(destination.equals(prevTray))
 							{
+								//debugging
 								if(Solver.debug().equals("debug")||
-										Solver.debug().equals("solution")||
-												Solver.debug().equals("stepbystep")){
+									Solver.debug().equals("solution")||
+									Solver.debug().equals("stepbystep")){
 								System.out.println("***Found");
 								}
+								
 								printPath(prevTray);
 								String [] rtn = new String[0];
 								return null;
@@ -258,18 +230,11 @@ public class PathFinder {
 				{
 					closestWeight=largestRandTrayWeight.myWeight;
 				}
-				//timer.reset();
-				
-				//if(weightQueue.size() <= 1)
-				//{
-				//	curTray = new Tray(origin);
-				//}
-				//else
-				//{
+				//debugging
 				if(Solver.debug().equals("debug")||
-						Solver.debug().equals("solution")||
-								Solver.debug().equals("stepbystep")){
-				System.out.println(closestWeight);
+					Solver.debug().equals("solution")||
+					Solver.debug().equals("stepbystep")){
+					System.out.println(closestWeight);
 				}
 				
 				weightQueue.add(largestRandTrayWeight);
@@ -301,10 +266,13 @@ public class PathFinder {
 			curTray.myPreviousTray.myNextTray = curTray;
 			curTray = curTray.myPreviousTray;
 		}
+		
+		//debugging
 		if(Solver.debug().equals("debug")||
-				Solver.debug().equals("printpath")){
+			Solver.debug().equals("printpath")){
 			System.out.println("***First Traversal Success");
 		}
+		
 		while(curTray.myNextTray!=null)
 		{
 			if(!curTray.equals(curTray.myNextTray))
@@ -326,24 +294,23 @@ public class PathFinder {
 
 		for (int i = 0; i < path.size()-1; i++) {
 			rtnPath[i] = path.get(i).moveMade(path.get(i + 1));
-
+			
+			//debugging
 			if(Solver.debug().equals("debug")||
-					Solver.debug().equals("printpath")){
-			System.out.println("***Tray");
-			int [][] board = path.get(i).myBoardState;
-			for(int[] array : board)
-			{
-				for(int interger : array)
-				{
-					System.out.print(interger);
+				Solver.debug().equals("printpath")){
+				System.out.println("***Tray");
+				int [][] board = path.get(i).myBoardState;
+					for(int[] array : board)
+					{
+						for(int interger : array)
+						{
+							System.out.print(interger);
+						}
+						System.out.println();
+					}
+					System.out.println();
 				}
-				System.out.println();
-			}
-			System.out.println();
-			}
-
 		}
-
 		return rtnPath;
 	}
 
