@@ -5,13 +5,12 @@ public class Block {
 
 	public int leftCol; //upper left x position
 	public int topRow;  //upper left y position
-	public int rightCol;
-	public int bottomRow;
-	public int myLength;
+	public int rightCol; //upper right x position
+	public int bottomRow; //upper right y position
+	public int myLength; 
 	public int myHeight;
 	public double myWeight;
 	public int similarStartBlocks;
-	//public Block[] simmilarEndBlocks = new Block[3]; for tests
 	public Block[] similarEndBlocks;
 	
 	public Block(int x1,int y1, int x2, int y2)
@@ -28,7 +27,7 @@ public class Block {
 	
 	public Block(int x1,int y1, int x2, int y2, Block[] endBlocks)
 	{
-		//takes in (x,y) of top left corner, then (x,y) of bottom right corner
+		//takes in (x,y) of top left corner, then (x,y) of bottom right corner, array of similar endblocks
 		leftCol = x1;
 		topRow = y1;
 		rightCol = x2;
@@ -57,7 +56,7 @@ public class Block {
 
 	public boolean equals(Block b)
 	{
-		//compares two blocks, returns true if all variables are equal
+		//compares two blocks, returns true if all position variables are equal
 		if ((leftCol == b.leftCol) && 
 			(topRow == b.topRow) &&
 			(rightCol == b.rightCol) &&
@@ -91,50 +90,18 @@ public class Block {
 	
 	public void calibrateWeight() {
 		/*
-		 * Will add more considerations:
-		 * 
-		 * 1. distance from goal
-		 * 2. how many similar blocks are in the start and end?
-		 * 		-equal number in both doesnt scale at all
-		 * 		-more in start = lower weight 
-		 * 		-more in end = 
-		 * 		-add number of end position / number of start positions
-		 * 3.
-		 * 4.
-		 * 5.
-		 * 6.
-		 * 7.
-		 * 8.
-		 * 
+		 *calibrates the weight variable
+		 * uses the following conditions:
+		 *  - number of similar end blocks
+		 *  - size of block
+		 *  - distance to closest end block
+		 *  - number of similar blocks in the tray
 		 * */
 		if (similarEndBlocks != null && similarEndBlocks.length != 0 ){
-			
-			//System.out.println("got here");
-			
-			/*
-			myWeight = ((similarEndBlocks.length + ((this.myHeight*this.myLength) / 
-				  							     (this.distanceFromClosestEndBlock()+1)))
-				  	 / similarStartBlocks); 
-			*/
-			
-			//Random r = new Random(10);
 			
 			myWeight = ((similarEndBlocks.length + ((this.myHeight*this.myLength) / 
 				  							     ((this.distanceFromClosestEndBlock()+1))))
 				  	 / (similarStartBlocks+1)); 
-			
-			
-			//myWeight = ((similarEndBlocks.length + ((this.myHeight*this.myLength) / (this.distanceFromClosestEndBlock()+1)))/ similarStartBlocks);
-			/*
-			System.out.println("Sim block len: " + similarEndBlocks.length);
-			System.out.println("height times weight: " + (this.myHeight*this.myLength));
-			System.out.println("distance from closest end + 1: " + this.distanceFromClosestEndBlock()+1);
-			System.out.println("size divided by distance: " + ((this.myHeight*this.myLength) / (this.distanceFromClosestEndBlock()+1)));
-			System.out.println("# simmiliar start blocks: " + similarStartBlocks);
-			
-			//myWeight = 1.0/(this.distanceFromClosestEndBlock()+1);
-			System.out.println("Block calibrated at : " + myWeight);
-			*/
 		}
 		else{
 			myWeight = 0;
